@@ -74,9 +74,9 @@ export default {
 <style scoped>
 .dictionary {
   height: calc(100vh - 177px);
+  min-height: calc(100% - 24px) !important;
   width: 100%;
   margin-top: 20px;
-  min-height: calc(100% - 24px) !important;
   display: flex;
   border-top: 1px solid orange;
 }

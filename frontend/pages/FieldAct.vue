@@ -2,7 +2,7 @@
   <div>
     <navigation-panel :enterFieldAct="true" />
     <v-card flat tile outlined class="fieldAct">
-      <field-act-tabs-panel style="height: 100%" :is-research="isResearch" @selectTask="(task) => selectTask(task)" />
+      <field-act-tabs-panel :is-research="isResearch" @selectTask="(task) => selectTask(task)" />
       <div v-if="data">
         <template v-if="!data.is_new">
           <template v-if="data.data">
@@ -188,14 +188,29 @@ export default {
   font-size: 30pt;
 }
 
-.fieldAct {
+/* .fieldAct {
   margin-top: 20px;
   margin-right: 5px;
   display: grid;
   gap: 20px;
-  grid-template-columns: 300px auto;
+  grid-template-columns: 315px auto;
   border-top: 1px solid orange;
   height: calc(100vh - 177px);
+} */
+
+.fieldAct {
+  height: calc(100vh - 177px);
+  min-height: calc(100% - 24px) !important;
+  width: 100%;
+  margin-top: 20px;
+  margin-right: 5px;
+  display: flex;
+  border-top: 1px solid orange;
+}
+
+field-act-tabs-panel {
+  margin-right: 0;
+  z-index: 2;
 }
 
 .fieldAct__header {

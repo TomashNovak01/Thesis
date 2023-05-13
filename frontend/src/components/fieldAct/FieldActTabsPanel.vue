@@ -13,12 +13,14 @@
         <col />
         <col />
         <col />
+        <col />
       </colgroup>
       <thead>
         <tr>
           <th>Задача</th>
           <th>№ скв</th>
           <th>Месторождение</th>
+          <th>Согл?</th>
         </tr>
       </thead>
       <tbody>
@@ -27,7 +29,10 @@
           @click.prevent="selectTask(research)">
           <td class="first">{{ research.research_id }}</td>
           <td>{{ research.well_name }}</td>
-          <td class="last">{{ research.oilfield }}</td>
+          <td>{{ research.oilfield }}</td>
+          <td class="last">
+            <icon :icon="research.is_agreed ? 'mdi:plus-thick' : 'mdi:close-thick'" :color="research.is_agreed ? 'green' : 'red'"/>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -85,8 +90,10 @@ import { ref, computed } from 'vue';
 import { useStore } from "vuex";
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from "@vuelidate/validators"
+import { Icon } from "@iconify/vue"
 
 export default {
+  components: { Icon },
   props: {
     isResearch: {
       type: Boolean,
@@ -156,7 +163,7 @@ export default {
 }
 
 .panel {
-  max-width: 300px;
+  max-width: 3150px;
   border-right: 1px solid orange;
 }
 

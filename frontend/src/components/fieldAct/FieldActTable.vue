@@ -453,6 +453,7 @@ export default {
   font-style: normal;
   text-decoration: none;
   max-width: 99%;
+  margin-left: 5px;
 }
 
 .fieldAct__table tr {
