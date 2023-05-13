@@ -4,8 +4,8 @@
       <div class="container">
         <h1>Авторизация пользователя</h1>
         <div class="form-control">
-          <label for="email">Почта:</label>
-          <input type="email" id="email" v-model="form.email.value" @blur="form.email.blur" />
+          <label for="email">Логин или почта:</label>
+          <input type="text" id="email" v-model="form.email.value" @blur="form.email.blur" />
           <small v-if="form.email.touched && form.email.errors.required">Введите свою почту</small>
         </div>
         <div class="form-control">
@@ -82,7 +82,7 @@ export default {
       for (let i = 0; i < users.value.length; i++) {
         const currentUser = users.value[i];
 
-        if (currentUser.email === form.email.value && currentUser.password === form.password.value) {
+        if ((currentUser.email === form.email.value || currentUser.login === form.email.value) && currentUser.password === form.password.value) {
           localStorage.setItem("currentUser", JSON.stringify(currentUser));
           toast.success(`Добро пожаловать ${currentUser.surname} ${currentUser.name} ${currentUser.patronymic} \nВы зашли как ${currentUser.role}`);
           router.push("/fieldact");

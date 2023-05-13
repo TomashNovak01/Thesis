@@ -7,6 +7,7 @@ class UserController {
         `
         select
           u.id_code,
+          u.login,
           u.email,
           u.password,
           u.surname,
@@ -34,6 +35,7 @@ class UserController {
         `
         select
           u.id_code,
+          u.login,
           u.email,
           u.password,
           u.password,
