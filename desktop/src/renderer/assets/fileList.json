@@ -1,0 +1,48 @@
+{
+  "fileData": [
+    {
+      "filepath": "Полевой_акт_6630_ПРИРАЗЛОМНОЕ_куст_229_цех_undefined_ID_1.json",
+      "research": {
+        "RESEARCH_ID": 1,
+        "CONTRACTOR": "ООО «РН-ГРП»",
+        "WELL_NAME": "6630",
+        "CLUSTER": "229",
+        "OBJECTS": "БС4-5",
+        "OILFIELD": "ПРИРАЗЛОМНОЕ",
+        "COMPLICATION": "Оборудование"
+      }
+    },
+    {
+      "filepath": "field_act_1168.json",
+      "research": {
+        "RESEARCH_ID": 1168,
+        "SCHEMA": "KIN_PRVD",
+        "CONTRACTOR": "ООО «РН-ГРП»",
+        "GRP_NUMBER": 1,
+        "GRP_COUNT": 2,
+        "WELL_NAME": "10321Г",
+        "CLUSTER": "226",
+        "OBJECTS": "АЧ1",
+        "OILFIELD": "ПРИРАЗЛОМНОЕ",
+        "SHOP_NAME": "ЦДНГ-10",
+        "COMPLICATION": null
+      }
+    },
+    {
+      "filepath": "field_act_1180.json",
+      "research": {
+        "RESEARCH_ID": 1180,
+        "SCHEMA": "KIN_PRVD",
+        "CONTRACTOR": "ООО «РН-ГРП»",
+        "GRP_NUMBER": 1,
+        "GRP_COUNT": 2,
+        "WELL_NAME": "6630",
+        "CLUSTER": "229",
+        "OBJECTS": "БС4-5 Верх",
+        "OILFIELD": "ПРИРАЗЛОМНОЕ",
+        "SHOP_NAME": "ЦДНГ-10",
+        "COMPLICATION": null
+      }
+    }
+  ]
+}

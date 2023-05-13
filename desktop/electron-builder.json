@@ -1,0 +1,43 @@
+{
+    "appId": "com.electron.grp",
+    "icon": "src/renderer/static/favicon.png",
+    "productName": "Полевой акт",
+    "directories": {
+        "output": "dist"
+    },
+    "nsis": {
+        "oneClick": false,
+        "perMachine": false,
+        "allowTOChangeInstallationDirectory": true,
+        "shortcutName": "Полевой акт"
+    },
+    "win": {
+        "target": "nsis"
+    },
+    "linux": {
+        "target": ["snap"]
+    },
+    "files": [
+        "src/main/**/*",
+        {
+            "from": "build/renderer",
+            "to": "renderer",
+            "filter": ["**/*"]
+        },
+        {
+            "from": "src/main/static",
+            "to": "static",
+            "filter": ["**/*"]
+        },
+        "!**/node_modules/*/{CHANGELOG.md,README.md,readme.md,readme}",
+        "!**/node_modules/*/{test,__test__,tests,powered-test,example,examples}",
+        "!**/node_modules/*.d.ts",
+        "!**/node_modules/.bin",
+        "!src",
+        "!config",
+        "!README.md",
+        "!scripts",
+        "!build/renderer",
+        "!dist"
+    ]
+}
