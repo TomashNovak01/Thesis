@@ -76,7 +76,7 @@ export default {
 .logo {
   background-image: url(../assets/logo.jpg);
   background-repeat: no-repeat;
-  background-position: top left;
+  background-position: top center;
   background-size: 220px auto;
 }
 
