@@ -1,7 +1,7 @@
 <template>
   <div class="panel">
     <header style="display: flex; padding: 5px 10px;">
-      <div style="margin-top: 15px;">Полевые акты</div>
+      <div style="margin-top: 15px;">{{ isCorrect ? "Полевые акты на согласование" : "Полевые акты" }}</div>
       <v-spacer />
       <v-btn v-if="isResearch" icon @click="dialogResearch = !dialogResearch">
         <v-icon color="orange" icon="mdi-plus" />
@@ -31,7 +31,9 @@
           <td>{{ research.well_name }}</td>
           <td>{{ research.oilfield }}</td>
           <td class="last">
-            <icon :icon="research.is_agreed ? 'mdi:plus-thick' : 'mdi:close-thick'" :color="research.is_agreed ? 'green' : 'red'"/>
+            <icon v-if="research.id_status === 1" icon="mdi:close-thick" color="red" />
+            <icon v-if="research.id_status === 2" icon="mdi:exclamation-thick" color="blue" />
+            <icon v-if="research.id_status === 3" icon="mdi:plus-thick" color="green" />
           </td>
         </tr>
       </tbody>
@@ -98,10 +100,15 @@ export default {
     isResearch: {
       type: Boolean,
       default: false
+    },
+    isCorrect: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props, { emit }) {
     const store = useStore();
+    store.dispatch("fillResearches");
 
     let newTask = ref({
       contractor: "",
@@ -109,6 +116,7 @@ export default {
       cluster: "",
       objects: "",
       oilfield: "",
+      is_new: true
     });
 
     const rules = computed(() => ({
@@ -121,7 +129,9 @@ export default {
 
     const v$ = useVuelidate(rules, newTask);
 
-    const researches = computed(() => store.getters.getResearches);
+    const researches = props.isCorrect ?
+      computed(() => store.getters.getResearchesForApproval) :
+      computed(() => store.getters.getResearches);
 
     const dialogResearch = ref(false);
 
@@ -163,8 +173,9 @@ export default {
 }
 
 .panel {
-  max-width: 3150px;
+  max-width: 312px;
   border-right: 1px solid orange;
+  background: white;
 }
 
 table {
