@@ -25,6 +25,14 @@ const routes = [
       title: "Полевой Акт",
     },
   },
+  {
+    path: "/corrector",
+    name: "PageCorrector",
+    component: () => import("./pages/Corrector.vue"),
+    meta: {
+      title: "Согласование"
+    }
+  }
 ];
 
 const router = createRouter({

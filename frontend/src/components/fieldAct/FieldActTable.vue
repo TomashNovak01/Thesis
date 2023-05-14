@@ -259,9 +259,7 @@ export default {
     store.dispatch("fillContracts");
 
     const contracts = computed(() => store.getters.getContracts);
-    console.log(contracts);
     const selectedContract = ref(contracts.value.find((c) => c.id_code === props.data.id_contract) || { value_full: "", date: "" });
-    console.log(selectedContract);
     const selectedGRPDate = ref(dayjs(props.data.grp_date).format("DD.MM.YYYY"));
 
     let registeredInputs = { total: 0 };

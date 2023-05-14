@@ -33,6 +33,9 @@ export default {
     if (!user) {
       router.push("/");
       return;
+    } else if (user.role === "Координатор") {
+      router.push("/corrector");
+      return;
     }
 
     const defaultComponent = "FieldDictionaryVue";

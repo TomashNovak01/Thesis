@@ -2,8 +2,8 @@
   <div>
     <navigation-panel :enterFieldAct="true" />
     <v-card flat tile outlined class="fieldAct">
-      <field-act-tabs-panel :is-research="isResearch" @selectTask="(task) => selectTask(task)" />
-      <div v-if="data">
+      <tasks-panel :is-research="isResearch" @selectTask="(task) => selectTask(task)" />
+        <div v-if="data">
         <template v-if="!data.is_new">
           <template v-if="data.data">
             <header class="fieldAct__header" style="display: flex; justify-content: space-around;">
@@ -13,24 +13,25 @@
               <v-btn icon title="Экспортировать в Excel" @click="saveAsExcel">
                 <icon icon="mdi:microsoft-excel" width="25" color="orange" />
               </v-btn>
-              <v-btn v-if="isResearch" icon title="Скачать" @click="download">
+              <v-btn v-if="isResearch && !isAgreed" icon title="Скачать" @click="download">
                 <icon icon="mdi:download" width="25" color="orange" />
               </v-btn>
-              <v-btn v-if="isResearch" icon title="Загрузить" @click="upload">
+              <v-btn v-if="isResearch && !isAgreed" icon title="Загрузить" @click="upload">
                 <icon icon="mdi:upload" width="25" color="orange" />
               </v-btn>
-              <v-btn v-if="isResearch" icon :title="title" @click="edit">
+              <v-btn v-if="isResearch && !isAgreed" icon :title="title" @click="edit">
                 <icon :icon="icon" width="25" color="orange" />
               </v-btn>
-              <v-btn v-if="isResearch" icon title="Выбрать новый шаблон" @click="data.is_new = true">
+              <v-btn v-if="isResearch && !isAgreed" icon title="Выбрать новый шаблон" @click="data.is_new = true">
                 <icon icon="mdi:view-list-outline" width="25" color="orange" />
               </v-btn>
-              <v-btn v-if="isResearch" icon title="Добавить строчку" @click="isAddFields = !isAddFields">
+              <v-btn v-if="isResearch && !isAgreed" icon title="Добавить строчку" @click="isAddFields = !isAddFields">
                 <icon icon="mdi:table-column-plus-after" width="25" color="orange" />
               </v-btn>
             </header>
             <v-divider />
             <field-act-table ref="table" :data="data" :is-edit="isEdit" />
+            <field-act-footer class="fieldAct__footer" :data="data" />
           </template>
         </template>
         <template v-else-if="data.is_new">
@@ -54,38 +55,49 @@ import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { Icon } from "@iconify/vue"
 import { toast } from "vue3-toastify";
-import FieldActTabsPanel from '../src/components/fieldAct/FieldActTabsPanel.vue';
+import TasksPanel from '../src/components/TasksPanel.vue';
 import FieldActTable from '../src/components/fieldAct/FieldActTable.vue'
 import NavigationPanel from '../src/components/NavigationPanel.vue';
 import FieldActTemplates from '../src/components/fieldAct/FieldActTemplates.vue';
 import FieldActDialogFields from '../src/components/fieldAct/FieldActDialogFields.vue';
+import FieldActFooter from '@/components/fieldAct/FieldActFooter.vue';
 import saveExcel from "../src/components/fieldAct/saveExcel.js";
 
 export default {
   name: "PageFieldAct",
-  components: { NavigationPanel, FieldActTabsPanel, FieldActTable, FieldActTemplates, FieldActDialogFields, Icon },
+  components: { NavigationPanel, TasksPanel, FieldActTable, FieldActTemplates, FieldActDialogFields, FieldActFooter, Icon },
   setup() {
     const router = useRouter();
     const user = JSON.parse(localStorage.getItem("currentUser"))
     if (!user) {
       router.push("/");
       return;
+    } else if (user.role === "Координатор") {
+      router.push("/corrector");
+      return;
     }
 
-    onMounted(() => store.dispatch("fillResearches"))
+    onMounted(() => {
+      store.dispatch("fillResearches");
+      store.dispatch("fillUsers");
+    })
 
     const store = useStore();
 
-    let data = ref(null);
+    const data = ref(null);
     const table = ref(null);
 
     const isResearch = ref(user.role === "Исследователь");
+    const isAgreed = ref(false);
     const isEdit = ref(false);
     const isAddFields = ref(false);
     const icon = ref("mdi:clipboard-edit-outline");
     const title = ref("Редактировать");
 
-    const selectTask = (task) => data.value = task;
+    const selectTask = (task) => {
+      data.value = task;
+      isAgreed.value = data.value.id_status !== 1;
+    };
 
     const saveAsExcel = () => saveExcel(data.value);
 
@@ -167,6 +179,7 @@ export default {
       data,
       table,
       isResearch,
+      isAgreed,
       isEdit,
       isAddFields,
       icon,
@@ -217,5 +230,12 @@ field-act-tabs-panel {
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
+}
+
+.fieldAct__footer {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: calc(100% - 335px);
 }
 </style>
