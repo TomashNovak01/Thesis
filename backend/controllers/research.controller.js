@@ -12,9 +12,9 @@ class ResearchController {
         `
           insert into
             public."research"
-            (contractor, well_name, cluster, objects, oilfield)
+            (contractor, well_name, cluster, objects, oilfield, is_new)
           values
-            ($1, $2, $3, $4, $5)
+            ($1, $2, $3, $4, $5, true)
           returning *
         `,
         [contractor, well_name, cluster, objects, oilfield]
@@ -28,7 +28,11 @@ class ResearchController {
 
   async getResearches(req, res, next) {
     try {
-      const researchesDB = await db.query(`select * from public."research"`);
+      const researchesDB = await db.query(
+        `
+          select * from public."research"
+        `
+      );
       const fieldsDB = await db.query(`select * from public."field_research"`);
 
       const researches = [];
