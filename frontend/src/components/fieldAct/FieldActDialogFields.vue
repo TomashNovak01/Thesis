@@ -101,6 +101,8 @@ export default {
 .fields {
   max-height: calc(90vh - 151px);
   overflow: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 .field {

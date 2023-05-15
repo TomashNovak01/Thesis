@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-top: 15px;">
+  <div class="templates">
     <header>Выберите шаблон полевого акта</header>
     <v-divider />
     <styled-table>
@@ -25,7 +25,8 @@
               </v-icon>
             </td>
             <td>
-              <icon color="green" icon="mdi:format-list-group-plus" style="cursor: pointer" @click="enterTemplate(item.template)" />
+              <icon color="green" icon="mdi:format-list-group-plus" style="cursor: pointer"
+                @click="enterTemplate(item.template)" />
             </td>
           </tr>
           <template v-if="item.isShown">
@@ -122,5 +123,11 @@ header {
 
 table {
   margin-top: 20px;
+}
+
+.templates {
+  width: 460%;
+  margin-top: 15px;
+  margin-left: 10px;
 }
 </style>

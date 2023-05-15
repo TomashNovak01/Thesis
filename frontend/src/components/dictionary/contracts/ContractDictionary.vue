@@ -22,8 +22,8 @@
       <tbody>
         <tr v-for="(contract, index) of contracts" :key="'contract_' + index">
           <td>{{ index + 1 }}</td>
-          <td>{{ contract.value_short }}</td>
           <td>{{ contract.value_full }}</td>
+          <td>{{ contract.value_short }}</td>
           <td>{{ dayjs(contract.date).format("DD.MM.YYYY") }}</td>
           <td v-if="canEdit">
             <v-icon color="blue" icon="mdi-wrench" @click="editContract(contract)" />

@@ -3,7 +3,7 @@
     <navigation-panel :enterFieldAct="true" />
     <v-card flat tile outlined class="fieldAct">
       <tasks-panel :is-research="isResearch" @selectTask="(task) => selectTask(task)" />
-        <div v-if="data">
+      <div v-if="data">
         <template v-if="!data.is_new">
           <template v-if="data.data">
             <header class="fieldAct__header" style="display: flex; justify-content: space-around;">
@@ -31,7 +31,6 @@
             </header>
             <v-divider />
             <field-act-table ref="table" :data="data" :is-edit="isEdit" />
-            <field-act-footer class="fieldAct__footer" :data="data" />
           </template>
         </template>
         <template v-else-if="data.is_new">
@@ -40,6 +39,7 @@
           </template>
           <div v-else class="warning">Полевой акт не создан</div>
         </template>
+        <field-act-footer class="fieldAct__footer" :data="data" />
       </div>
       <div v-else class="warning">Выберете полевой акт</div>
     </v-card>
@@ -80,6 +80,8 @@ export default {
     onMounted(() => {
       store.dispatch("fillResearches");
       store.dispatch("fillUsers");
+      store.dispatch("fillRemarks");
+      store.dispatch("fillContracts");
     })
 
     const store = useStore();
@@ -236,6 +238,6 @@ field-act-tabs-panel {
   position: fixed;
   right: 0;
   bottom: 0;
-  width: calc(100% - 335px);
+  width: calc(100% - 337px);
 }
 </style>

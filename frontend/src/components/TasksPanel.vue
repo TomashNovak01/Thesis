@@ -1,11 +1,14 @@
 <template>
   <div class="panel">
-    <header style="display: flex; padding: 5px 10px;">
-      <div style="margin-top: 15px;">{{ isCorrect ? "Полевые акты на согласование" : "Полевые акты" }}</div>
-      <v-spacer />
-      <v-btn v-if="isResearch" icon @click="dialogResearch = !dialogResearch">
-        <v-icon color="orange" icon="mdi-plus" />
-      </v-btn>
+    <header>
+      <div style="display: flex; padding: 5px 10px;">
+        <div style="margin-top: 15px;">{{ isCorrect ? "Полевые акты на согласование" : "Полевые акты" }}</div>
+        <v-spacer />
+        <v-btn v-if="isResearch" icon title="Создать полевой акт" @click="dialogResearch = !dialogResearch">
+          <v-icon color="orange" icon="mdi-plus" />
+        </v-btn>
+      </div>
+      <input type="text" class="search" placeholder="Поиск" v-model="search">
     </header>
     <v-divider />
     <table>
@@ -24,17 +27,22 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(research, index) of researches" :key="'research_' + index"
-          :class="{ active__row: activeResearch === research.research_id, row_before_active: research.research_id === activeResearch - 1 }"
-          @click.prevent="selectTask(research)">
-          <td class="first">{{ research.research_id }}</td>
-          <td>{{ research.well_name }}</td>
-          <td>{{ research.oilfield }}</td>
-          <td class="last">
-            <icon v-if="research.id_status === 1" icon="mdi:close-thick" color="red" />
-            <icon v-if="research.id_status === 2" icon="mdi:exclamation-thick" color="blue" />
-            <icon v-if="research.id_status === 3" icon="mdi:plus-thick" color="green" />
-          </td>
+        <template v-if="researches">
+          <tr v-for="(research, index) of researches" :key="'research_' + index"
+            :class="{ active__row: activeResearch === research.research_id, row_before_active: research.research_id === activeResearch - 1 }"
+            @click.prevent="selectTask(research)">
+            <td class="first">{{ research.research_id }}</td>
+            <td>{{ research.well_name }}</td>
+            <td>{{ research.oilfield }}</td>
+            <td class="last">
+              <icon v-if="research.id_status === 1" icon="mdi:close-thick" color="red" />
+              <icon v-if="research.id_status === 2" icon="mdi:exclamation-thick" color="blue" />
+              <icon v-if="research.id_status === 3" icon="mdi:plus-thick" color="green" />
+            </td>
+          </tr>
+        </template>
+        <tr v-else>
+          <td colspan="4">Данные отсутствуют</td>
         </tr>
       </tbody>
     </table>
@@ -88,7 +96,7 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useStore } from "vuex";
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from "@vuelidate/validators"
@@ -109,6 +117,8 @@ export default {
   setup(props, { emit }) {
     const store = useStore();
     store.dispatch("fillResearches");
+
+    const search = ref("");
 
     let newTask = ref({
       contractor: "",
@@ -133,6 +143,21 @@ export default {
       computed(() => store.getters.getResearchesForApproval) :
       computed(() => store.getters.getResearches);
 
+    watch(search, (newValue) => {
+      if (newValue) {
+        researches.value = researches.value.filter((r) =>
+          r.well_name.includes(newValue) ||
+          r.oilfield.includes(newValue))
+      } else {
+        researches.value = props.isCorrect ?
+          computed(() => store.getters.getResearchesForApproval) :
+          computed(() => store.getters.getResearches);
+      }
+
+      console.log(newValue);
+      console.log(researches.value);
+    })
+
     const dialogResearch = ref(false);
 
     const activeResearch = ref(null);
@@ -150,6 +175,7 @@ export default {
     };
 
     return {
+      search,
       researches,
       v$,
       dialogResearch,
@@ -168,6 +194,15 @@ export default {
   font-weight: initial;
 }
 
+.search {
+  width: 95%;
+  margin-left: 10px;
+  margin-top: 10px;
+  padding: 5px 5px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
 .field {
   margin-top: 25px;
 }
@@ -183,6 +218,9 @@ table {
   font-size: 12px;
   font-weight: 600;
   border-collapse: collapse;
+  overflow: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 table td {

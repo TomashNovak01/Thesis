@@ -24,8 +24,8 @@
       <tbody>
         <tr v-for="(field, index) of fields" :key="'field_' + index">
           <td>{{ index + 1 }}</td>
-          <td>{{ field.value_short }}</td>
           <td>{{ field.value_full }}</td>
+          <td>{{ field.value_short }}</td>
           <td>{{ field.sequence }}</td>
           <td>{{ field.block_id }}</td>
           <td>{{ field.unit }}</td>

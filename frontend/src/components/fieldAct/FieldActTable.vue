@@ -34,8 +34,8 @@
         <tr>
           <td class="smt noBorder ta-l">Договор №</td>
           <td class="smt noBorder ta-l">
-            <template v-if="!isEdit">{{ selectedContract.value_full }}</template>
-            <v-autocomplete v-else v-model="selectedContract" :items="contracts" item-title="value_full" return-object
+            <template v-if="!isEdit">{{ selectedContract.value_short }}</template>
+            <v-autocomplete v-else v-model="selectedContract" :items="contracts" item-title="value_short" return-object
               variant="underlined" density="compact" color="orange" class="smt noBorder ta-l w100 s30" />
           </td>
           <td class="smt noBorder ta-l">от</td>
@@ -256,10 +256,13 @@ export default {
   components: { VueDatePicker },
   setup(props) {
     const store = useStore();
-    store.dispatch("fillContracts");
 
     const contracts = computed(() => store.getters.getContracts);
-    const selectedContract = ref(contracts.value.find((c) => c.id_code === props.data.id_contract) || { value_full: "", date: "" });
+    const selectedContract = ref({ value_shor: "", date: "" });
+
+    for (const contract of contracts.value)
+      if (contract.id_code === props.data.id_contract) selectedContract.value = contract
+
     const selectedGRPDate = ref(dayjs(props.data.grp_date).format("DD.MM.YYYY"));
 
     let registeredInputs = { total: 0 };
@@ -552,7 +555,7 @@ export default {
   .printField {
     font-size: 10pt;
     height: 100vh;
-    width: 100w;
+    width: 100vw;
     position: fixed;
     top: 0;
     left: 0;
@@ -568,10 +571,10 @@ export default {
 
       td,
       th {
-        border-top: 1px solid #000;
-        border-right: 1px solid #000;
-        border-bottom: 1px solid #000;
-        border-left: 1px solid #000;
+        border-top: 1pt solid #000;
+        border-right: 0.5pt solid #000;
+        border-bottom: 1pt solid #000;
+        border-left: 0.5pt solid #000;
         height: 18px;
       }
 
@@ -584,7 +587,7 @@ export default {
       }
 
       .bto {
-        border-top: 1px solid #000;
+        border-top: 1.1px solid #000;
       }
 
       .bbo {

@@ -34,6 +34,7 @@ export default {
   setup() {
     const store = useStore();
     store.dispatch("fillUsers");
+    store.dispatch("fillRemarks");
     const user = JSON.parse(localStorage.getItem("currentUser"))
 
     const router = useRouter();
