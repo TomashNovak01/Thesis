@@ -116,7 +116,7 @@ export default {
   },
   setup(props, { emit }) {
     const store = useStore();
-    store.dispatch("fillResearches");
+    // store.dispatch("fillResearches");
 
     const search = ref("");
 

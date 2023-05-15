@@ -42,7 +42,12 @@ class ResearchController {
 
         for (const field of fieldsDB.rows) {
           const f = await db.query(
-            `select * from public."field" where id_code = ${field.id_code}`
+            `
+              select *
+              from public."field"
+              where id_code = ${field.id_code}
+              order by sequence asc
+            `
           );
           if (research.research_id === field.research_id)
             fields.push({

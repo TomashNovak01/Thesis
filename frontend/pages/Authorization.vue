@@ -43,7 +43,7 @@ export default {
   name: "PageAuthorization",
   components: { Icon },
   setup() {
-    onMounted(() => store.dispatch("fillUsers"));
+    // onMounted(() => store.dispatch("fillUsers"));
 
     const submitted = ref(false);
     const error = ref();

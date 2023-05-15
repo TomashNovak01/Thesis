@@ -37,7 +37,7 @@ export default {
     }
   },
   setup(props, { emit }) {
-    onMounted(() => store.dispatch("fillFields"));
+    // onMounted(() => store.dispatch("fillFields"));
 
     const store = useStore();
     const fields = computed(() => store.getters.getFields);

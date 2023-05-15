@@ -70,7 +70,7 @@ export default {
   },
   components: { StyledTable, FieldDialog },
   setup(props) {
-    onMounted(() => store.dispatch("fillFields"))
+    // onMounted(() => store.dispatch("fillFields"))
 
     const headers = props.canEdit ? [
       "№",

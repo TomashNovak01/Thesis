@@ -82,7 +82,7 @@ export default {
     const store = useStore();
 
     onMounted(() => {
-      store.dispatch("fillTemplates");
+      // store.dispatch("fillTemplates");
       updateTemplates()
     });
 

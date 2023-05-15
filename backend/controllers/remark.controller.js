@@ -39,6 +39,7 @@ class RemarkController {
             u.patronymic
           from public."remark" as r
             join public."user" as u on u.id_code = r.id_user
+          order by r.research_id asc
           `
         );
       res.json(remarks.rows);
@@ -55,6 +56,7 @@ class RemarkController {
           select *
           from public."remark"
           where research_id = ${research_id}
+          order by date
         `
       );
 

@@ -89,7 +89,7 @@ export default {
         research_id: props.data.research_id
       });
 
-      store.dispatch("fillRemarks");
+      // store.dispatch("fillRemarks");
       text.value = "";
     }
 

@@ -67,7 +67,7 @@ export default {
   },
   components: { StyledTable, ContractDialog },
   setup(props) {
-    onMounted(() => store.dispatch("fillContracts"));
+    // onMounted(() => store.dispatch("fillContracts"));
 
     const headers = props.canEdit ? ["№", "Полное наименование", "Укороченное наименование", "Дата", "", ""] :
       ["№", "Полное наименование", "Укороченное наименование", "Дата"];

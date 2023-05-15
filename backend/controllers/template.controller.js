@@ -39,7 +39,12 @@ class TemplateController {
 
   async getTemplates(req, res, next) {
     try {
-      const templatesDB = await db.query(`select * from public."template"`);
+      const templatesDB = await db.query(
+        `
+        select *
+        from public."template"
+        order by sequence asc
+      `);
       const field_template_lkp = await db.query(
         `select id_field, id_template from public."field_template_lkp"`
       );
@@ -90,8 +95,10 @@ class TemplateController {
         if (ft.id_template == id_code) {
           const f = await db.query(
             `
-              select * from public."field"
+              select *
+              from public."field"
               where id_code = ${ft.id_field}
+              order by sequence asc
             `
           );
 

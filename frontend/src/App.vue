@@ -4,14 +4,20 @@
   </v-app>
 </template>
 
-<script>
-export default {
-  name: "App",
+<script setup>
+import { onMounted } from 'vue';
+import { useStore } from 'vuex';
 
-  data: () => ({
-    //
-  }),
-};
+const store = useStore();
+
+onMounted(() => {
+  store.dispatch("fillContracts");
+  store.dispatch("fillFields");
+  store.dispatch("fillRemarks");
+  store.dispatch("fillResearches");
+  store.dispatch("fillTemplates");
+  store.dispatch("fillUsers");
+});
 </script>
 
 <style scoped>

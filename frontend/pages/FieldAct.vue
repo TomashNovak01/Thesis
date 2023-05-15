@@ -77,12 +77,12 @@ export default {
       return;
     }
 
-    onMounted(() => {
-      store.dispatch("fillResearches");
-      store.dispatch("fillUsers");
-      store.dispatch("fillRemarks");
-      store.dispatch("fillContracts");
-    })
+    // onMounted(() => {
+    //   store.dispatch("fillResearches");
+    //   store.dispatch("fillUsers");
+    //   store.dispatch("fillRemarks");
+    //   store.dispatch("fillContracts");
+    // })
 
     const store = useStore();
 

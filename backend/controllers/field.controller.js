@@ -27,7 +27,12 @@ class FieldController {
 
   async getFields(req, res, next) {
     try {
-      const fields = await db.query(`select * from public."field"`);
+      const fields = await db.query(
+        `
+          select *
+          from public."field"
+          order by sequence asc
+        `);
       res.json(fields.rows);
     } catch (error) {
       next(error);
@@ -45,6 +50,7 @@ class FieldController {
         select *
         from public."field"
         where id_code = ${id_code}
+        order by sequence asc
         `
       );
       res.json(fields.rows[0]);
