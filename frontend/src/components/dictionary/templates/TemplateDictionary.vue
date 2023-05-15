@@ -2,6 +2,7 @@
   <div>
     <header>
       <div>Шаблоны полевого акта</div>
+      <input type="text" class="search" placeholder="Поиск" v-model="search" />
       <v-icon v-if="canEdit" color="orange" icon="mdi-plus" @click="editTemplate(null)" />
     </header>
     <v-divider />
@@ -20,25 +21,27 @@
       </thead>
       <tbody>
         <template v-for="(item, index) of templates">
-          <tr v-if="item" :key="'template_' + index">
-            <td>{{ index + 1 }}</td>
-            <td>{{ item.template.name }}</td>
-            <td>
-              <v-icon color="orange" @click="item.isShown = !item.isShown">
-                {{ item.isShown ? "mdi-chevron-up" : "mdi-chevron-down" }}
-              </v-icon>
-            </td>
-            <td v-if="canEdit">
-              <v-icon color="blue" icon="mdi-wrench" @click="editTemplate(item.template)" />
-            </td>
-            <td v-if="canEdit">
-              <v-icon color="red" icon="mdi-minus-circle" @click="showDeleteDialog(item.template)" />
-            </td>
-          </tr>
-          <template v-if="item.isShown">
-            <tr v-for="(field, i) in item.template.fields" :key="'template_' + index + '_field_' + i">
-              <td colspan="5" style="text-align: left !important; padding: 0 15px;">{{ field.value_full }}</td>
+          <template v-if="!search || item.template.name.trim().toLowerCase().includes(search.trim().toLowerCase())">
+            <tr v-if="item" :key="'template_' + index">
+              <td>{{ index + 1 }}</td>
+              <td>{{ item.template.name }}</td>
+              <td>
+                <v-icon color="orange" @click="item.isShown = !item.isShown">
+                  {{ item.isShown ? "mdi-chevron-up" : "mdi-chevron-down" }}
+                </v-icon>
+              </td>
+              <td v-if="canEdit">
+                <v-icon color="blue" icon="mdi-wrench" @click="editTemplate(item.template)" />
+              </td>
+              <td v-if="canEdit">
+                <v-icon color="red" icon="mdi-minus-circle" @click="showDeleteDialog(item.template)" />
+              </td>
             </tr>
+            <template v-if="item.isShown">
+              <tr v-for="(field, i) in item.template.fields" :key="'template_' + index + '_field_' + i">
+                <td colspan="5" style="text-align: left !important; padding: 0 15px;">{{ field.value_full }}</td>
+              </tr>
+            </template>
           </template>
         </template>
       </tbody>
@@ -77,12 +80,14 @@ export default {
   components: { StyledTable, TemplateDialog, Icon },
   setup(props) {
     const headers = props.canEdit ? ["№", "Наименование", "", "", ""] : ["№", "Наименование", ""];
-    const templates = ref([]);
 
-    const store = useStore();
+    const search = ref("");
+
+    const templates = ref([]);
 
     onMounted(() => updateTemplates());
 
+    const store = useStore();
     const res = computed(() => store.getters.getTemplates);
 
     const updateTemplates = () => {
@@ -133,6 +138,7 @@ export default {
     }
 
     return {
+      search,
       isEdit,
       editorDialog,
       editingTemplate,
@@ -163,6 +169,14 @@ header {
   padding-bottom: 0.5rem;
   height: 32px;
   font-size: 14pt;
+}
+
+.search {
+  width: 50%;
+  margin-bottom: 5px;
+  padding: 5px 5px;
+  border: 1px solid gray;
+  border-radius: 5px;
 }
 
 table {

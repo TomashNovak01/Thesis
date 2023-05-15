@@ -26,9 +26,17 @@
           <th>Согл?</th>
         </tr>
       </thead>
-      <tbody>
-        <template v-if="researches">
-          <tr v-for="(research, index) of researches" :key="'research_' + index"
+      <tbody v-if="researches">
+        <template v-for="(research, index) of researches">
+          <tr
+            v-if="
+              research &&
+              (!search ||
+                research.research_id.toString().trim().toLowerCase().includes(search.trim().toLowerCase()) ||
+                research.well_name.trim().toLowerCase().includes(search.trim().toLowerCase()) ||
+                research.oilfield.trim().toLowerCase().includes(search.trim().toLowerCase()))
+            "
+            :key="'research_' + index"
             :class="{ active__row: activeResearch === research.research_id, row_before_active: research.research_id === activeResearch - 1 }"
             @click.prevent="selectTask(research)">
             <td class="first">{{ research.research_id }}</td>
@@ -40,10 +48,12 @@
               <icon v-if="research.id_status === 3" icon="mdi:plus-thick" color="green" />
             </td>
           </tr>
+          <!-- <tr v-else :key="'no_research_' + index" class="noData">
+            <td colspan="4">
+              Данные отсутствуют
+            </td>
+          </tr> -->
         </template>
-        <tr v-else>
-          <td colspan="4">Данные отсутствуют</td>
-        </tr>
       </tbody>
     </table>
     <v-dialog v-model="dialogResearch" width="1000">
@@ -141,21 +151,6 @@ export default {
     const researches = props.isCorrect ?
       computed(() => store.getters.getResearchesForApproval) :
       computed(() => store.getters.getResearches);
-
-    watch(search, (newValue) => {
-      if (newValue) {
-        researches.value = researches.value.filter((r) =>
-          r.well_name.includes(newValue) ||
-          r.oilfield.includes(newValue))
-      } else {
-        researches.value = props.isCorrect ?
-          computed(() => store.getters.getResearchesForApproval) :
-          computed(() => store.getters.getResearches);
-      }
-
-      console.log(newValue);
-      console.log(researches.value);
-    })
 
     const dialogResearch = ref(false);
 

@@ -2,6 +2,7 @@
   <div>
     <header>
       <div>Поля полевого акта</div>
+      <input type="text" class="search" placeholder="Поиск" v-model="search" />
       <v-icon v-if="canEdit" color="orange" icon="mdi-plus" @click="editField(null)" />
     </header>
     <v-divider />
@@ -22,7 +23,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(field, index) of fields" :key="'field_' + index">
+        <template v-for="(field, index) of fields">
+          <tr v-if="field && (
+            !search ||
+            field.value_full.trim().toLowerCase().includes(search.trim().toLowerCase()) ||
+            field.value_short.trim().toLowerCase().includes(search.trim().toLowerCase())
+          )" :key="'field_' + index">
           <td>{{ index + 1 }}</td>
           <td>{{ field.value_full }}</td>
           <td>{{ field.value_short }}</td>
@@ -36,6 +42,7 @@
             <v-icon color="red" icon="mdi-minus-circle" @click="showDeleteDialog(field)" />
           </td>
         </tr>
+      </template>
       </tbody>
     </styled-table>
     <v-dialog v-if="canEdit" v-model="editorDialog" max-width="1000">
@@ -88,6 +95,8 @@ export default {
       "Ед. изм."
     ];
 
+    const search = ref("");
+
     const store = useStore();
     const fields = computed(() => store.getters.getFields);
 
@@ -127,6 +136,7 @@ export default {
 
     return {
       headers,
+      search,
       fields,
       editorDialog,
       editingField,
@@ -156,6 +166,14 @@ header {
   padding-bottom: 0.5rem;
   height: 32px;
   font-size: 14pt;
+}
+
+.search {
+  width: 50%;
+  margin-bottom: 5px;
+  padding: 5px 5px;
+  border: 1px solid gray;
+  border-radius: 5px;
 }
 
 table {

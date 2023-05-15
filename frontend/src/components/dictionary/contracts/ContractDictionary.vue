@@ -2,6 +2,7 @@
   <div>
     <header>
       <div>Договоры полевого акта</div>
+      <input type="text" class="search" placeholder="Поиск" v-model="search">
       <v-icon v-if="canEdit" color="orange" icon="mdi-plus" @click="editContract(null)" />
     </header>
     <v-divider />
@@ -20,18 +21,24 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(contract, index) of contracts" :key="'contract_' + index">
-          <td>{{ index + 1 }}</td>
-          <td>{{ contract.value_full }}</td>
-          <td>{{ contract.value_short }}</td>
-          <td>{{ dayjs(contract.date).format("DD.MM.YYYY") }}</td>
-          <td v-if="canEdit">
-            <v-icon color="blue" icon="mdi-wrench" @click="editContract(contract)" />
-          </td>
-          <td v-if="canEdit">
-            <v-icon color="red" icon="mdi-minus-circle" @click="showDeleteDialog(contract)" />
-          </td>
-        </tr>
+        <template v-for="(contract, index) of contracts">
+          <tr v-if="contract && (
+            !search ||
+            contract.value_full.trim().toLowerCase().includes(search.trim().toLowerCase()) ||
+            contract.value_short.trim().toLowerCase().includes(search.trim().toLowerCase())
+          )" :key="'contract_' + index">
+            <td>{{ index + 1 }}</td>
+            <td>{{ contract.value_full }}</td>
+            <td>{{ contract.value_short }}</td>
+            <td>{{ dayjs(contract.date).format("DD.MM.YYYY") }}</td>
+            <td v-if="canEdit">
+              <v-icon color="blue" icon="mdi-wrench" @click="editContract(contract)" />
+            </td>
+            <td v-if="canEdit">
+              <v-icon color="red" icon="mdi-minus-circle" @click="showDeleteDialog(contract)" />
+            </td>
+          </tr>
+        </template>
       </tbody>
     </styled-table>
     <v-dialog v-if="canEdit" v-model="editorDialog" max-width="1000">
@@ -69,6 +76,8 @@ export default {
   setup(props) {
     const headers = props.canEdit ? ["№", "Полное наименование", "Укороченное наименование", "Дата", "", ""] :
       ["№", "Полное наименование", "Укороченное наименование", "Дата"];
+
+    const search = ref("")
 
     const store = useStore();
     const contracts = computed(() => store.getters.getContracts);
@@ -109,6 +118,7 @@ export default {
 
     return {
       headers,
+      search,
       contracts,
       editContract,
       editingContract,
@@ -139,6 +149,14 @@ header {
   padding-bottom: 0.5rem;
   height: 32px;
   font-size: 14pt;
+}
+
+.search {
+  width: 50%;
+  margin-bottom: 5px;
+  padding: 5px 5px;
+  border: 1px solid gray;
+  border-radius: 5px;
 }
 
 table {
