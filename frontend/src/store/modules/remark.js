@@ -42,6 +42,6 @@ export default {
   },
   getters: {
     getResearchRemarks: (state) =>
-      state.remarks.sort((a, b) => a.date - b.date),
+      state.remarks,
   },
 };

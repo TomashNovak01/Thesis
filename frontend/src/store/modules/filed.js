@@ -78,6 +78,6 @@ export default {
     fields: [],
   },
   getters: {
-    getFields: (state) => state.fields.sort((a, b) => a.sequence - b.sequence),
+    getFields: (state) => state.fields,
   },
 };
