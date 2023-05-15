@@ -1,16 +1,18 @@
 import { createStore } from "vuex";
-import user from "./modules/user";
-import filed from "./modules/filed";
-import template from "./modules/template";
 import contract from "./modules/contract";
+import filed from "./modules/filed";
+import remark from "./modules/remark";
 import research from "./modules/research";
+import template from "./modules/template";
+import user from "./modules/user";
 
 export default createStore({
   modules: {
-    user,
-    filed,
-    template,
     contract,
-    research
+    filed,
+    remark,
+    research,
+    template,
+    user,
   },
 });
