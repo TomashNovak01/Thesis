@@ -9,22 +9,16 @@
         <router-link to="/dictionary">Справочники</router-link>
       </tr>
     </table>
-    <div class="tabs" style="align-items: center">
-      <icon icon="mdi:account-circle" width="45" color="orange" />
-      <div style="margin: 0 15px;">
-        <p>ФИО: {{ user.surname }} {{ user.name }} {{ user.patronymic }}</p>
-        <p>Роль: {{ user.role }}</p>
-      </div>
-      <router-link to="/" @click="deleteLocalStorage">Выйти</router-link>
-    </div>
+    <user-card />
   </div>
 </template>
 
 <script>
 import { Icon } from "@iconify/vue";
+import UserCard from "./UserCard.vue";
 
 export default {
-  components: { Icon },
+  components: { Icon, UserCard },
   props: {
     enterFieldAct: {
       type: Boolean,

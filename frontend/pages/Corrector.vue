@@ -3,12 +3,7 @@
     <header>
       <div class="tabs logo" />
       <div class="tabs" style="align-items: center">
-        <icon icon="mdi:account-circle" width="50" color="orange" />
-        <div style="margin: 0 15px;">
-          <p>ФИО: {{ user.surname }} {{ user.name }} {{ user.patronymic }}</p>
-          <p>Роль: {{ user.role }}</p>
-        </div>
-        <router-link to="/" @click="deleteLocalStorage">Выйти</router-link>
+       <user-card />
       </div>
     </header>
 
@@ -24,12 +19,13 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { Icon } from "@iconify/vue";
+import UserCard from '../src/components/UserCard.vue';
 import TasksPanel from "@/components/TasksPanel.vue";
 import FieldActTable from '../src/components/fieldAct/FieldActTable.vue';
 import FieldActFooter from '../src/components/fieldAct/FieldActFooter.vue';
 
 export default {
-  components: { Icon, TasksPanel, FieldActTable, FieldActFooter },
+  components: { Icon, UserCard, TasksPanel, FieldActTable, FieldActFooter },
   setup() {
     const user = JSON.parse(localStorage.getItem("currentUser"))
 

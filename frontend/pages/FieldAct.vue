@@ -7,7 +7,7 @@
         <template v-if="!data.is_new">
           <template v-if="data.data">
             <header class="fieldAct__header" style="display: flex; justify-content: space-around;">
-              <v-btn icon title="Печать">
+              <v-btn v-if="data.id_status === 3" icon title="Печать">
                 <icon icon="mdi:printer-outline" width="25" color="orange" @click="table.print()" />
               </v-btn>
               <v-btn icon title="Экспортировать в Excel" @click="saveAsExcel">
