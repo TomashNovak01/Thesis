@@ -63,8 +63,6 @@ export default {
     const res = computed(() => store.getters.getTemplates);
 
     onMounted(() => {
-      // store.dispatch("fillTemplates");
-
       templates.value = [];
       for (let i = 0; i < res.value.length; i++) {
         templates.value.push({ template: res.value[i], isShown: false });

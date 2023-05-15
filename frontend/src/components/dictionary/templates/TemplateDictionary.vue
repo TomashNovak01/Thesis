@@ -81,10 +81,7 @@ export default {
 
     const store = useStore();
 
-    onMounted(() => {
-      // store.dispatch("fillTemplates");
-      updateTemplates()
-    });
+    onMounted(() => updateTemplates());
 
     const res = computed(() => store.getters.getTemplates);
 

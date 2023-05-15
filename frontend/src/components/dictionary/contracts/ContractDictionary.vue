@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import StyledTable from '../../common/StyledTable.vue'
 import ContractDialog from './ContractDialog.vue'
@@ -67,8 +67,6 @@ export default {
   },
   components: { StyledTable, ContractDialog },
   setup(props) {
-    // onMounted(() => store.dispatch("fillContracts"));
-
     const headers = props.canEdit ? ["№", "Полное наименование", "Укороченное наименование", "Дата", "", ""] :
       ["№", "Полное наименование", "Укороченное наименование", "Дата"];
 

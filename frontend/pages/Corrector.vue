@@ -22,7 +22,6 @@
 
 <script>
 import { ref } from "vue";
-import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { Icon } from "@iconify/vue";
 import TasksPanel from "@/components/TasksPanel.vue";
@@ -32,9 +31,6 @@ import FieldActFooter from '../src/components/fieldAct/FieldActFooter.vue';
 export default {
   components: { Icon, TasksPanel, FieldActTable, FieldActFooter },
   setup() {
-    const store = useStore();
-    // store.dispatch("fillUsers");
-    // store.dispatch("fillRemarks");
     const user = JSON.parse(localStorage.getItem("currentUser"))
 
     const router = useRouter();

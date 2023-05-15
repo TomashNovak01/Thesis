@@ -77,13 +77,6 @@ export default {
       return;
     }
 
-    // onMounted(() => {
-    //   store.dispatch("fillResearches");
-    //   store.dispatch("fillUsers");
-    //   store.dispatch("fillRemarks");
-    //   store.dispatch("fillContracts");
-    // })
-
     const store = useStore();
 
     const data = ref(null);

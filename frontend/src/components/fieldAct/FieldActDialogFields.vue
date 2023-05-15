@@ -23,7 +23,7 @@
 
 <script>
 import { useStore } from "vuex";
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed } from 'vue';
 
 export default {
   props: {
@@ -37,8 +37,6 @@ export default {
     }
   },
   setup(props, { emit }) {
-    // onMounted(() => store.dispatch("fillFields"));
-
     const store = useStore();
     const fields = computed(() => store.getters.getFields);
 

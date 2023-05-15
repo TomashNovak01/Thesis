@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import StyledTable from '../../common/StyledTable.vue'
 import FieldDialog from './FieldDialog.vue';
@@ -70,8 +70,6 @@ export default {
   },
   components: { StyledTable, FieldDialog },
   setup(props) {
-    // onMounted(() => store.dispatch("fillFields"))
-
     const headers = props.canEdit ? [
       "№",
       "Полное наименование",
