@@ -53,7 +53,7 @@ export default {
 header {
   display: flex;
   height: 85px;
-  border-bottom: 1px solid orange;
+  margin-top: 5px;
 }
 
 .tabs {
@@ -72,6 +72,8 @@ header {
 body {
   display: flex;
   height: calc(100vh - 130px);
+  border-top: 1px solid orange;
+  margin-top: 10px;
 }
 
 .fieldAct__footer {
