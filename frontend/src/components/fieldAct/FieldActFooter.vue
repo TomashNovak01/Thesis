@@ -40,6 +40,10 @@ export default {
     isCorrect: {
       type: Boolean,
       default: false
+    },
+    isCurrentUser: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props, { emit }) {
@@ -49,12 +53,10 @@ export default {
     const users = computed(() => store.getters.getUsers);
 
     const researcher = ref(isTake.value ? users.value.find((u) => u.id_code === props.data.id_user) : null);
-    const isCurrentUser = ref(researcher.value ? JSON.parse(localStorage.getItem("currentUser")).id_code === researcher.value.id_code : false);
 
     watch(() => props.data, () => {
       isTake.value = props.data.id_user !== null;
       researcher.value = isTake.value ? users.value.find((u) => u.id_code === props.data.id_user) : null;
-      isCurrentUser.value = researcher.value ? JSON.parse(localStorage.getItem("currentUser")).id_code === researcher.value.id_code : false;
     })
 
     const take = () => {
@@ -73,8 +75,7 @@ export default {
       isTake,
       take,
       submitForApproval,
-      researcher,
-      isCurrentUser,
+      researcher
     }
   }
 }

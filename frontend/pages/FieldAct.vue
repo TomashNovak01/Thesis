@@ -13,19 +13,21 @@
               <v-btn icon title="Экспортировать в Excel" @click="saveAsExcel">
                 <icon icon="mdi:microsoft-excel" width="25" color="orange" />
               </v-btn>
-              <v-btn v-if="isResearch && !isAgreed" icon title="Скачать" @click="download">
+              <v-btn v-if="isResearch && !isAgreed && isCurrentUser" icon title="Скачать" @click="download">
                 <icon icon="mdi:download" width="25" color="orange" />
               </v-btn>
-              <v-btn v-if="isResearch && !isAgreed" icon title="Загрузить" @click="upload">
+              <v-btn v-if="isResearch && !isAgreed && isCurrentUser" icon title="Загрузить" @click="upload">
                 <icon icon="mdi:upload" width="25" color="orange" />
               </v-btn>
-              <v-btn v-if="isResearch && !isAgreed" icon :title="title" @click="edit">
+              <v-btn v-if="isResearch && !isAgreed && isCurrentUser" icon :title="title" @click="edit">
                 <icon :icon="icon" width="25" color="orange" />
               </v-btn>
-              <v-btn v-if="isResearch && !isAgreed" icon title="Выбрать новый шаблон" @click="data.is_new = true">
+              <v-btn v-if="isResearch && !isAgreed && isCurrentUser" icon title="Выбрать новый шаблон"
+                @click="data.is_new = true">
                 <icon icon="mdi:view-list-outline" width="25" color="orange" />
               </v-btn>
-              <v-btn v-if="isResearch && !isAgreed" icon title="Добавить строчку" @click="isAddFields = !isAddFields">
+              <v-btn v-if="isResearch && !isAgreed && isCurrentUser" icon title="Добавить строчку"
+                @click="isAddFields = !isAddFields">
                 <icon icon="mdi:table-column-plus-after" width="25" color="orange" />
               </v-btn>
             </header>
@@ -39,7 +41,7 @@
           </template>
           <div v-else class="warning">Полевой акт не создан</div>
         </template>
-        <field-act-footer class="fieldAct__footer" :data="data" />
+        <field-act-footer class="fieldAct__footer" :data="data" :is-current-user="isCurrentUser" />
       </div>
       <div v-else class="warning">Выберете полевой акт</div>
     </v-card>
@@ -50,7 +52,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, watch } from 'vue';
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { Icon } from "@iconify/vue"
@@ -89,12 +91,15 @@ export default {
     const icon = ref("mdi:clipboard-edit-outline");
     const title = ref("Редактировать");
 
+    const isCurrentUser = ref(false);
+
     const selectTask = (task) => {
       data.value = task;
       isAgreed.value = data.value.id_status !== 1;
+      isCurrentUser.value = data.value.id_user !== null ? JSON.parse(localStorage.getItem("currentUser")).id_code === data.value.id_user : false
     };
 
-    const saveAsExcel = () => saveExcel(data.value);
+    const saveAsExcel = () => saveExcel(data.value, table.value.selectedContract);
 
     const edit = () => {
       if (isEdit.value) {
@@ -177,6 +182,7 @@ export default {
       isAgreed,
       isEdit,
       isAddFields,
+      isCurrentUser,
       icon,
       title,
       saveAsExcel,
@@ -192,19 +198,8 @@ export default {
 
 <style scoped>
 .warning {
-  /* margin: 200px auto; */
   font-size: 30pt;
 }
-
-/* .fieldAct {
-  margin-top: 20px;
-  margin-right: 5px;
-  display: grid;
-  gap: 20px;
-  grid-template-columns: 315px auto;
-  border-top: 1px solid orange;
-  height: calc(100vh - 177px);
-} */
 
 .fieldAct {
   height: calc(100vh - 177px);
