@@ -39,7 +39,7 @@
               variant="underlined" density="compact" color="orange" class="smt noBorder ta-l w100 s30" />
           </td>
           <td class="smt noBorder ta-l">от</td>
-          <td class="smt noBorder ta-l"><span>{{ selectedContract.date }}</span></td>
+          <td class="smt noBorder ta-l"><span>{{ dayjs(selectedContract.date).format("DD.MM.YYYY") }}</span></td>
         </tr>
         <tr>
           <td class="smt noBorder ta-l">месторождение</td>
@@ -65,7 +65,7 @@
           <td class="smt noBorder ta-l">Дата ГРП</td>
           <td class="smt noBorder ta-l" />
           <td class="smt noBorder ta-l">
-            <span v-if="!isEdit">{{ data.grp_date }}</span>
+            <span v-if="!isEdit">{{ dayjs(data.grp_date).format("DD.MM.YYYY") }}</span>
             <VueDatePicker v-else v-model="data.grp_date" :format="dateFormat" />
           </td>
         </tr>
