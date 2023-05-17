@@ -31,10 +31,16 @@
                 </v-icon>
               </td>
               <td v-if="canEdit">
-                <v-icon color="blue" icon="mdi-wrench" @click="editTemplate(item.template)" />
+                <v-btn icon variant="text" :title="'Редактировать шаблон ' + item.template.name"
+                  @click="editTemplate(item.template)" style="margin: 5px;">
+                  <icon color="blue" width="25" icon="material-symbols:edit-outline-sharp" />
+                </v-btn>
               </td>
               <td v-if="canEdit">
-                <v-icon color="red" icon="mdi-minus-circle" @click="showDeleteDialog(item.template)" />
+                <v-btn icon variant="text" :title="'Удалить шаблон ' + item.template.name"
+                  @click="showDeleteDialog(item.template)" style="margin: 5px;">
+                  <icon color="red" width="25" icon="material-symbols:delete-forever" />
+                </v-btn>
               </td>
             </tr>
             <template v-if="item.isShown">

@@ -29,20 +29,26 @@
             field.value_full.trim().toLowerCase().includes(search.trim().toLowerCase()) ||
             field.value_short.trim().toLowerCase().includes(search.trim().toLowerCase())
           )" :key="'field_' + index">
-          <td>{{ index + 1 }}</td>
-          <td>{{ field.value_full }}</td>
-          <td>{{ field.value_short }}</td>
-          <td>{{ field.sequence }}</td>
-          <td>{{ field.block_id }}</td>
-          <td>{{ field.unit }}</td>
-          <td v-if="canEdit">
-            <v-icon color="blue" icon="mdi-wrench" @click="editField(field)" />
-          </td>
-          <td v-if="canEdit">
-            <v-icon color="red" icon="mdi-minus-circle" @click="showDeleteDialog(field)" />
-          </td>
-        </tr>
-      </template>
+            <td>{{ index + 1 }}</td>
+            <td>{{ field.value_full }}</td>
+            <td>{{ field.value_short }}</td>
+            <td>{{ field.sequence }}</td>
+            <td>{{ field.block_id }}</td>
+            <td>{{ field.unit }}</td>
+            <td v-if="canEdit">
+              <v-btn icon variant="text" :title="'Редактировать поле ' + field.value_full" @click="editField(field)"
+                style="margin: 5px;">
+                <icon color="blue" width="25" icon="material-symbols:edit-outline-sharp" />
+              </v-btn>
+            </td>
+            <td v-if="canEdit">
+              <v-btn icon variant="text" :title="'Удалить поле ' + field.value_full" @click="showDeleteDialog(field)"
+                style="margin: 5px;">
+                <icon color="red" width="25" icon="material-symbols:delete-forever" />
+              </v-btn>
+            </td>
+          </tr>
+        </template>
       </tbody>
     </styled-table>
     <v-dialog v-if="canEdit" v-model="editorDialog" max-width="1000">
@@ -66,6 +72,7 @@ import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import StyledTable from '../../common/StyledTable.vue'
 import FieldDialog from './FieldDialog.vue';
+import { Icon } from "@iconify/vue"
 
 export default {
   name: "FieldDictionary",
@@ -75,7 +82,7 @@ export default {
       default: false
     }
   },
-  components: { StyledTable, FieldDialog },
+  components: { StyledTable, FieldDialog, Icon },
   setup(props) {
     const headers = props.canEdit ? [
       "№",

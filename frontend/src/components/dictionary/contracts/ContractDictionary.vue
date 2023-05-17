@@ -32,10 +32,16 @@
             <td>{{ contract.value_short }}</td>
             <td>{{ dayjs(contract.date).format("DD.MM.YYYY") }}</td>
             <td v-if="canEdit">
-              <v-icon color="blue" icon="mdi-wrench" @click="editContract(contract)" />
+              <v-btn icon variant="text" :title="'Редактировать договор ' + contract.value_short"
+                @click="editContract(contract)" style="margin: 5px;">
+                <icon color="blue" width="25" icon="material-symbols:edit-outline-sharp" />
+              </v-btn>
             </td>
             <td v-if="canEdit">
-              <v-icon color="red" icon="mdi-minus-circle" @click="showDeleteDialog(contract)" />
+              <v-btn icon variant="text" :title="'Удалить договор ' + contract.value_short"
+                @click="showDeleteDialog(contract)" style="margin: 5px;">
+                <icon color="red" width="25" icon="material-symbols:delete-forever" />
+              </v-btn>
             </td>
           </tr>
         </template>
@@ -60,6 +66,7 @@
 <script>
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
+import { Icon } from "@iconify/vue"
 import StyledTable from '../../common/StyledTable.vue'
 import ContractDialog from './ContractDialog.vue'
 import dayjs from "dayjs"
@@ -72,7 +79,7 @@ export default {
       default: false
     }
   },
-  components: { StyledTable, ContractDialog },
+  components: { StyledTable, ContractDialog, Icon },
   setup(props) {
     const headers = props.canEdit ? ["№", "Полное наименование", "Укороченное наименование", "Дата", "", ""] :
       ["№", "Полное наименование", "Укороченное наименование", "Дата"];

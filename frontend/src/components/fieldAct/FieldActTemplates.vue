@@ -25,8 +25,11 @@
               </v-icon>
             </td>
             <td>
-              <icon color="green" icon="mdi:format-list-group-plus" style="cursor: pointer"
-                @click="enterTemplate(item.template)" />
+              <v-btn icon variant="text" :title="'Выбрать шаблон ' + item.template.name"
+                @click="enterTemplate(item.template)">
+                <icon color="green" width="25"
+                  icon="streamline:interface-upload-website-action-actions-computer-website-device-display-upload-monitor-screen" />
+              </v-btn>
             </td>
           </tr>
           <template v-if="item.isShown">
