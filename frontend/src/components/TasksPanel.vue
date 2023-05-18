@@ -28,15 +28,12 @@
       </thead>
       <tbody v-if="researches">
         <template v-for="(research, index) of researches">
-          <tr
-            v-if="
-              research &&
-              (!search ||
-                research.research_id.toString().trim().toLowerCase().includes(search.trim().toLowerCase()) ||
-                research.well_name.trim().toLowerCase().includes(search.trim().toLowerCase()) ||
-                research.oilfield.trim().toLowerCase().includes(search.trim().toLowerCase()))
-            "
-            :key="'research_' + index"
+          <tr v-if="research &&
+            (!search ||
+              research.research_id.toString().trim().toLowerCase().includes(search.trim().toLowerCase()) ||
+              research.well_name.trim().toLowerCase().includes(search.trim().toLowerCase()) ||
+              research.oilfield.trim().toLowerCase().includes(search.trim().toLowerCase()))
+            " :key="'research_' + index"
             :class="{ active__row: activeResearch === research.research_id, row_before_active: research.research_id === activeResearch - 1 }"
             @click.prevent="selectTask(research)">
             <td class="first">{{ research.research_id }}</td>
@@ -102,6 +99,14 @@
         </v-card-text>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="dialogStatistic" width="1000">
+      <statistic-on-field-act :researches="researches" />
+    </v-dialog>
+    <footer v-if="!isCorrect">
+      <v-btn icon title="Статистика по полевым актам" @click="dialogStatistic = true">
+        <icon width="20" icon="akar-icons:statistic-up" color="orange" />
+      </v-btn>
+    </footer>
   </div>
 </template>
 
@@ -111,9 +116,10 @@ import { useStore } from "vuex";
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from "@vuelidate/validators"
 import { Icon } from "@iconify/vue"
+import StatisticOnFieldAct from './StatisticOnFieldAct.vue';
 
 export default {
-  components: { Icon },
+  components: { Icon, StatisticOnFieldAct },
   props: {
     isResearch: {
       type: Boolean,
@@ -153,6 +159,7 @@ export default {
       computed(() => store.getters.getResearches);
 
     const dialogResearch = ref(false);
+    const dialogStatistic = ref(false);
 
     const activeResearch = ref(null);
     const selectTask = (research) => {
@@ -173,6 +180,7 @@ export default {
       researches,
       v$,
       dialogResearch,
+      dialogStatistic,
       activeResearch,
       saveResearch,
       selectTask
@@ -258,5 +266,12 @@ tbody tr:hover {
 
 .row_before_active td {
   border-bottom: 1px solid orange;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  margin: 10px;
 }
 </style>
