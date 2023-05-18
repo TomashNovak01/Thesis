@@ -51,20 +51,20 @@ export default {
       if (chart) chart.destroy();
 
       chart = new Chart(chartRef.value, {
-        type: "doughnut",
+        type: "pie",
         data: {
           datasets: [
             {
               data: [noAgreed.value.length, toAgreed.value.length, agreed.value.length],
               backgroundColor: [
-                'rgba(255,127,14, 0.2)',
-                'rgba(31,119,180, 0.2)',
-                'rgba(44,160,44, 0.2)',
+                'rgba(255, 0, 0, 0.2)',
+                'rgba(0, 0, 255, 0.2)',
+                'rgba(62, 175, 124, 0.2)',
               ],
               borderColor: [
-                'rgba(255,127,14, 1)',
-                'rgba(31,119,180, 1)',
-                'rgba(44,160,44, 1)',
+                'rgba(255, 0, 0, 1)',
+                'rgba(0, 0, 255, 1)',
+                'rgba(62, 175, 124, 1)',
               ],
               borderWidth: 1,
             }
@@ -95,6 +95,8 @@ export default {
     margin: 0 auto;
     height: 500px !important;
     width: 500px !important;
+
+    // color: rgb(62, 175, 124)
   }
 }
 </style>
