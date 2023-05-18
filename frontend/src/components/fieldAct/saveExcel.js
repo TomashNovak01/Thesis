@@ -1,7 +1,7 @@
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
 
-export default async (data) => {
+export default async (data, contract) => {
   const workbook = new ExcelJS.Workbook();
   const sheet = workbook.addWorksheet("Полевой акт");
 
@@ -87,7 +87,7 @@ export default async (data) => {
   sheet.addRows([
     { 1: "ОТЧЁТ О ВЫПОЛНЕННЫХ УСЛУГАХ ПО ГИДРОРАЗРЫВУ ПЛАСТА" },
     { 1: "Подрядчик:", 2: data.contractor },
-    { 1: "Договор", 2: data.contract_number, 3: "от", 4: data.contract_date },
+    { 1: "Договор", 2: contract.value_short, 3: "от", 4: contract.date },
     { 1: "Месторождение", 2: data.oilfield },
     { 1: "Скважина", 2: data.well_name },
     { 1: "Куст:", 2: data.cluster },
@@ -171,75 +171,70 @@ export default async (data) => {
     ) {
       sheet.addRow({});
       isPreviousDivider = true;
-    } else {
-      const factPerc = calcPercent(data.fact, getFactMB(field));
-      const redPerc = calcPercent(data.redesign, getFactMB(field));
-
-      sheet.addRow({
-        1: field.title,
-        7: field.unit,
-        8: field.mb_before_fracturing,
-        9: field.mb_after_fracturing,
-        10: !field.is_editable ? getFactMB(field) : field.mb_frac,
-        11: field.design,
-        12: field.redesign,
-        13: isFixedField(field) ? "-" : field.fact,
-        14:
-          Math.round(((field.redesign || 0) - (getFactMB(field) || 0)) * 1000) /
-          1000,
-        15:
-          !field.redesign || !getFactMB(field)
-            ? "-"
-            : Math.round((getFactMB(field) / r.redesign) * 1000) / 100,
-        16: getToPay(field),
-        18: isFixedField(field) ? "-" : factPerc.value,
-        19: redPerc.value,
-      });
-
-      const fieldIndex = sheet.lastRow._number;
-
-      if (factPerc.isTooMuch) sheet.getCell("R" + fieldIndex).fill = style.redBG;
-      if (redPerc.isTooMuch) sheet.getCell("S" + fieldIndex).fill = style.redBG;
-
-      sheet.mergeCells(`A${fieldIndex}:F${fieldIndex}`);
-
-      sheet.getCell("A" + fieldIndex).alignment = style.alignment.left;
-      sheet.getCell("G" + fieldIndex).alignment = style.alignment.left;
-
-      sheet.lastRow.eachCell((c, columnNumber) => {
-        if (![1, 7, 15, 16].includes(columnNumber))
-          c.alignment = style.alignment.right;
-
-        c.border = isPreviousDivider
-          ? style.borders.mediumPos(["left", "right", "top"])
-          : style.borders.mediumPos(["left", "right"]);
-
-        if (
-          (columnNumber === 1 || columnNumber === 2) &&
-          field.title !== "Всего пропанта"
-        )
-          c.font = { name: "Arial", family: 1, size: 14, bold: false };
-
-        if (isPreviousDivider && index > 3)
-          sheet
-            .getRow(sheet.lastRow._number - 2)
-            .eachCell(
-              (c) =>
-                (c.border = style.borders.mediumPos([
-                  "left",
-                  "right",
-                  "bottom",
-                ]))
-            );
-
-        if (index === data.data.length - 1)
-          c.border = style.borders.mediumPos(["left", "right", "bottom"]);
-
-        if (index === 0) c.border = style.borders.medium;
-      });
-
-      isPreviousDivider = false;
     }
+    const factPerc = calcPercent(data.fact, getFactMB(field));
+    const redPerc = calcPercent(data.redesign, getFactMB(field));
+
+    sheet.addRow({
+      1: field.title,
+      7: field.unit,
+      8: field.mb_before_fracturing,
+      9: field.mb_after_fracturing,
+      10: !field.is_editable ? getFactMB(field) : field.mb_frac,
+      11: field.design,
+      12: field.redesign,
+      13: isFixedField(field) ? "-" : field.fact,
+      14:
+        Math.round(((field.redesign || 0) - (getFactMB(field) || 0)) * 1000) /
+        1000,
+      15:
+        !field.redesign || !getFactMB(field)
+          ? "-"
+          : Math.round((getFactMB(field) / r.redesign) * 1000) / 100,
+      16: getToPay(field),
+      18: isFixedField(field) ? "-" : factPerc.value,
+      19: redPerc.value,
+    });
+
+    const fieldIndex = sheet.lastRow._number;
+
+    if (factPerc.isTooMuch) sheet.getCell("R" + fieldIndex).fill = style.redBG;
+    if (redPerc.isTooMuch) sheet.getCell("S" + fieldIndex).fill = style.redBG;
+
+    sheet.mergeCells(`A${fieldIndex}:F${fieldIndex}`);
+
+    sheet.getCell("A" + fieldIndex).alignment = style.alignment.left;
+    sheet.getCell("G" + fieldIndex).alignment = style.alignment.left;
+
+    sheet.lastRow.eachCell((c, columnNumber) => {
+      if (![1, 7, 15, 16].includes(columnNumber))
+        c.alignment = style.alignment.right;
+
+      c.border = isPreviousDivider
+        ? style.borders.mediumPos(["left", "right", "top"])
+        : style.borders.mediumPos(["left", "right"]);
+
+      if (
+        (columnNumber === 1 || columnNumber === 2) &&
+        field.title !== "Всего пропанта"
+      )
+        c.font = { name: "Arial", family: 1, size: 14, bold: false };
+
+      if (isPreviousDivider && index > 3)
+        sheet
+          .getRow(sheet.lastRow._number - 2)
+          .eachCell(
+            (c) =>
+              (c.border = style.borders.mediumPos(["left", "right", "bottom"]))
+          );
+
+      if (index === data.data.length - 1)
+        c.border = style.borders.mediumPos(["left", "right", "bottom"]);
+
+      if (index === 0) c.border = style.borders.medium;
+    });
+
+    isPreviousDivider = false;
   });
 
   let linesBefore = sheet.lastRow._number;
@@ -402,10 +397,10 @@ export default async (data) => {
     sheet.mergeCells(`N:${fieldIndex}:P${fieldIndex}`);
   };
 
-  configureRow(linesBefore + 1, ["top"]);
-  configureRow(linesBefore + 2);
-  configureRow(linesBefore + 3);
-  configureRow(linesBefore + 4, ["bottom"]);
+  // configureRow(linesBefore + 1, ["top"]);
+  // configureRow(linesBefore + 2);
+  // configureRow(linesBefore + 3);
+  // configureRow(linesBefore + 4, ["bottom"]);
 
   sheet.getRow(linesBefore + 4).height = 40;
 
