@@ -56,12 +56,10 @@
 
 <script>
 import { computed, ref } from "vue";
-import { Icon } from "@iconify/vue";
 import { useStore } from 'vuex';
 import dayjs from "dayjs"
 
 export default {
-  components: { Icon },
   props: {
     data: {
       type: Object,

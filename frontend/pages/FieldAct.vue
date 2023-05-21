@@ -52,10 +52,9 @@
 </template>
 
 <script>
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-import { Icon } from "@iconify/vue"
 import { toast } from "vue3-toastify";
 import TasksPanel from '../src/components/TasksPanel.vue';
 import FieldActTable from '../src/components/fieldAct/FieldActTable.vue'
@@ -67,7 +66,7 @@ import saveExcel from "../src/components/fieldAct/saveExcel.js";
 
 export default {
   name: "PageFieldAct",
-  components: { NavigationPanel, TasksPanel, FieldActTable, FieldActTemplates, FieldActDialogFields, FieldActFooter, Icon },
+  components: { NavigationPanel, TasksPanel, FieldActTable, FieldActTemplates, FieldActDialogFields, FieldActFooter },
   setup() {
     const router = useRouter();
     const user = JSON.parse(localStorage.getItem("currentUser"))

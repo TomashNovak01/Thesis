@@ -27,11 +27,10 @@
 <script>
 import { ref, computed, watch } from "vue";
 import { useStore } from "vuex";
-import { Icon } from "@iconify/vue";
 import Chat from "../Chat.vue";
 
 export default {
-  components: { Icon, Chat },
+  components: { Chat },
   props: {
     data: {
       type: Object,

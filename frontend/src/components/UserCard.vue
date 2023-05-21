@@ -14,10 +14,7 @@
 </template>
 
 <script>
-import { Icon } from "@iconify/vue";
-
 export default {
-  components: { Icon },
   setup() {
     const user = JSON.parse(localStorage.getItem("currentUser"));
 

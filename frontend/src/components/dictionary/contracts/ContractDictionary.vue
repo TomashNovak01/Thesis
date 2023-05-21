@@ -66,7 +66,6 @@
 <script>
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
-import { Icon } from "@iconify/vue"
 import StyledTable from '../../common/StyledTable.vue'
 import ContractDialog from './ContractDialog.vue'
 import dayjs from "dayjs"
@@ -79,7 +78,7 @@ export default {
       default: false
     }
   },
-  components: { StyledTable, ContractDialog, Icon },
+  components: { StyledTable, ContractDialog },
   setup(props) {
     const headers = props.canEdit ? ["№", "Полное наименование", "Укороченное наименование", "Дата", "", ""] :
       ["№", "Полное наименование", "Укороченное наименование", "Дата"];

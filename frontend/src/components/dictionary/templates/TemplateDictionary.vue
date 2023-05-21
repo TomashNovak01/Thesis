@@ -73,7 +73,6 @@ import { ref, computed, onMounted } from "vue";
 import { useStore } from "vuex";
 import StyledTable from '../../common/StyledTable.vue'
 import TemplateDialog from "./TemplateDialog.vue";
-import { Icon } from "@iconify/vue"
 
 export default {
   name: "TemplateDictionary",
@@ -83,7 +82,7 @@ export default {
       default: false
     }
   },
-  components: { StyledTable, TemplateDialog, Icon },
+  components: { StyledTable, TemplateDialog },
   setup(props) {
     const headers = props.canEdit ? ["№", "Наименование", "", "", ""] : ["№", "Наименование", ""];
 

@@ -47,11 +47,10 @@
 import { ref, computed, onMounted } from "vue";
 import { useStore } from "vuex";
 import StyledTable from '../common/StyledTable.vue'
-import { Icon } from "@iconify/vue";
 
 export default {
   name: "TemplateDictionary",
-  components: { StyledTable, Icon },
+  components: { StyledTable },
   props: {
     data: {
       type: Object,

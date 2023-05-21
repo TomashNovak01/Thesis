@@ -7,6 +7,8 @@ import router from "../router";
 import vuetify from "./plugins/vuetify";
 import { loadFonts } from "./plugins/webfontloader";
 
+import { Icon } from "@iconify/vue";
+
 import "vue3-toastify/dist/index.css"
 import "./assets/theme.css";
 
@@ -18,4 +20,5 @@ createApp(App)
     .use(vuetify)
     .use(router)
     .use(VueToastify)
+    .component("icon", Icon)
     .mount("#app");

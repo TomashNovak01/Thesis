@@ -33,7 +33,6 @@ import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { ref, onErrorCaptured, computed, onMounted } from "vue";
 import { useForm } from "../src/use/form";
-import { Icon } from "@iconify/vue"
 import { toast } from "vue3-toastify"
 
 const required = (val) => !!val;
@@ -41,7 +40,6 @@ const minLength = (num) => (val) => val.length >= num;
 
 export default {
   name: "PageAuthorization",
-  components: { Icon },
   setup() {
     const submitted = ref(false);
     const error = ref();

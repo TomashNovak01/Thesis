@@ -14,11 +14,10 @@
 </template>
 
 <script>
-import { Icon } from "@iconify/vue";
 import UserCard from "./UserCard.vue";
 
 export default {
-  components: { Icon, UserCard },
+  components: { UserCard },
   props: {
     enterFieldAct: {
       type: Boolean,

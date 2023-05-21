@@ -18,14 +18,13 @@
 <script>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { Icon } from "@iconify/vue";
 import UserCard from '../src/components/UserCard.vue';
 import TasksPanel from "@/components/TasksPanel.vue";
 import FieldActTable from '../src/components/fieldAct/FieldActTable.vue';
 import FieldActFooter from '../src/components/fieldAct/FieldActFooter.vue';
 
 export default {
-  components: { Icon, UserCard, TasksPanel, FieldActTable, FieldActFooter },
+  components: { UserCard, TasksPanel, FieldActTable, FieldActFooter },
   setup() {
     const user = JSON.parse(localStorage.getItem("currentUser"))
 

@@ -115,11 +115,10 @@ import { ref, computed, watch } from 'vue';
 import { useStore } from "vuex";
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from "@vuelidate/validators"
-import { Icon } from "@iconify/vue"
 import StatisticOnFieldAct from './StatisticOnFieldAct.vue';
 
 export default {
-  components: { Icon, StatisticOnFieldAct },
+  components: { StatisticOnFieldAct },
   props: {
     isResearch: {
       type: Boolean,
