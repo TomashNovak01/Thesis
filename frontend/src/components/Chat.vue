@@ -10,31 +10,40 @@
         </v-card-title>
         <v-card-text>
           <div class="messages">
-            <table>
-              <colgroup>
-                <col style="width: 15%" />
-                <col />
-                <col style="width: 15%" />
-              </colgroup>
-              <tbody>
-                <tr v-for="(remark, index) of remarks" :key="'remark_' + index" class="message">
-                  <td class="message_item">{{ remark.surname }} {{ remark.name }} {{ remark.patronymic }}</td>
-                  <td class="message_item">{{ remark.remarks }}</td>
-                  <td class="message_item br-0">{{ remark.date }}</td>
-                </tr>
-              </tbody>
-            </table>
+            <v-card v-for="(remark, index) of remarks" :key="'remark_' + index"
+              :title="`${remark.surname} ${remark.name} ${remark.patronymic}`"
+              :subtitle="dayjs(remark.date).format('DD.MM.YYYY')" :elevation="2" class="message">
+              <v-card-text>
+                {{ remark.remarks }}
+                <!-- <p>{{ remark.file_bin }}</p> -->
+                <p v-if="remark.file_bin" class="message_link">
+                  <a :href="'data:application/text;charset=utf-8,' + remark.file_bin.data" :download="remark.file_name">
+                    {{ remark.file_name }}
+                  </a>
+                </p>
+              </v-card-text>
+            </v-card>
           </div>
+          <template v-if="selectedFile">
+            <div class="file">
+              <h5 class="file_title">Файл:</h5>
+              <div class="file_data">
+                <p class="file_data_name">{{ selectedFile[0].name }}</p>
+                <icon width="20" icon="material-symbols:delete-outline" color="gray" class="file_data_delete"
+                  @click="selectedFile = null" />
+              </div>
+            </div>
+          </template>
         </v-card-text>
         <v-card-actions style="display: flex; justify-content: space-between;">
-          <v-btn icon @click="attachFile" style="vertical-align: top;">
+          <v-btn icon @click="fileInput.click()" style="vertical-align: top;">
             <icon width="35" icon="mdi:paperclip" color="orange" />
           </v-btn>
+          <input v-show="false" ref="fileInput" type="file" accept="text/*" multiple @change="filesPush" />
           <div style="width: 100%;">
-            <v-text-field v-model="v$.text.$model" placeholder="Сообщение" variant="outlined" clearable style="margin: 0 10px;" />
-            <small v-for="error of v$.text.$errors" :key="error.$uid" class="error">
-                {{ error.$message }}
-              </small>
+            <v-text-field v-model="text" placeholder="Сообщение" variant="outlined" clearable style="margin: 0 10px;"
+              @keyup.enter="sendMessage" />
+            <small class="error">{{ error }}</small>
           </div>
           <v-btn icon @click="sendMessage" style="vertical-align: top;">
             <icon width="35" icon="mdi:send-circle" color="orange" />
@@ -49,8 +58,7 @@
 import { computed, ref } from "vue";
 import { Icon } from "@iconify/vue";
 import { useStore } from 'vuex';
-import useVuelidate from '@vuelidate/core';
-import { helpers, required } from "@vuelidate/validators";
+import dayjs from "dayjs"
 
 export default {
   components: { Icon },
@@ -63,6 +71,10 @@ export default {
   setup(props) {
     const chatDialog = ref(false);
     const text = ref("");
+    const selectedFile = ref(null);
+    const error = ref("");
+
+    const fileInput = ref(null);
 
     const store = useStore();
     const remarks = computed(() => store.getters.getResearchRemarks.filter((r) => r.research_id === props.data.research_id));
@@ -72,31 +84,42 @@ export default {
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const yyyy = today.getFullYear();
 
-    const rules = computed(() => ({
-      text: { required: helpers.withMessage('Введите сообщение', required) }
-    }));
-
-    const v$ = useVuelidate(rules, text);
+    const filesPush = (event) => {
+      if (event.target.files[0].type.startsWith('text/'))
+        selectedFile.value = [event.target.files[0]];
+    }
 
     const sendMessage = () => {
-      v$.value.$touch();
-      if (v$.value.$error) return;
+      if (!text.value && !selectedFile.value) {
+        error.value = "Невозможно создать сообщение без текста или файла";
+        return;
+      }
 
-      store.dispatch("addRemark", {
-        id_user: JSON.parse(localStorage.getItem("currentUser")).id_code,
-        remarks: text.value,
-        date: today = dd + "-" + mm + "-" + yyyy,
-        research_id: props.data.research_id
-      });
+      const formData = new FormData();
 
-      // store.dispatch("fillRemarks");
+      formData.append("id_user", JSON.parse(localStorage.getItem("currentUser")).id_code);
+      formData.append("remarks", text.value);
+      formData.append("date", dd + "-" + mm + "-" + yyyy);
+      formData.append("research_id", props.data.research_id);
+      formData.append("file_name", selectedFile.value ? selectedFile.value[0].name : null);
+      formData.append("file", selectedFile.value ?  selectedFile.value[0] : null);
+
+      store.dispatch("addRemark", formData);
+      store.dispatch("fillRemarks");
+
       text.value = "";
+      selectedFile.value = null;
     }
 
     return {
+      dayjs,
       chatDialog,
-      v$,
+      fileInput,
+      text,
+      selectedFile,
+      error,
       remarks,
+      filesPush,
       sendMessage
     }
   }
@@ -127,13 +150,38 @@ export default {
 }
 
 .message {
+  margin: 5px;
+}
 
-  &_item {
-    margin-left: 5px;
+.file {
+  padding: 0 5px;
+
+  ol {
+    margin: 0 10px 10px;
+    font-size: 12px;
+    min-height: 70px;
+    overflow-y: scroll;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      vertical-align: middle;
+    }
   }
 
-  br-0 {
-    border-right: 0 !important;
+  &_data {
+    display: flex;
+    justify-content: space-between;
+    vertical-align: middle;
+
+    &_name {
+      margin: 0 10px 10px;
+      font-size: 12px;
+    }
+
+    &_delete {
+      cursor: pointer;
+    }
   }
 }
 </style>

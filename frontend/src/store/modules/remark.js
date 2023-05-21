@@ -15,12 +15,13 @@ export default {
     },
     async addRemark({ commit }, remark) {
       try {
-        console.log(remark);
+        console.log([...remark.entries()]);
+
         await axios
           .post(`http://localhost:8080/api/create_remark`, remark)
           .then((response) =>
             commit("ADD_REMARK", { id_code: response.id_code, ...remark })
-          );
+          ).catch((error) => console.error(error));
 
         toast.success("Вы успешно отправили сообщение");
       } catch (error) {

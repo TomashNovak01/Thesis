@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const multer = require("multer");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -11,8 +12,11 @@ const researchRouter = require("./routers/research.router");
 const templateRouter = require("./routers/template.router");
 const userRouter = require("./routers/user.router");
 
+const upload = multer();
+
 app.use(express.json());
 app.use(cors());
+app.use(upload.single("file"));
 
 app.use("/api", contractRouter);
 app.use("/api", fieldRouter);
