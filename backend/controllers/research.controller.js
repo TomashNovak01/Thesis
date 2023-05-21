@@ -113,9 +113,8 @@ class ResearchController {
             shop_role = $8,
             shop_person = $9,
             f_propant_mass_nkt = $10,
-            remarks = $11,
-            id_status = $12,
-            id_user = $13
+            id_status = $11,
+            id_user = $12
           where
             research_id = $1
         `,
@@ -130,7 +129,6 @@ class ResearchController {
           body.shop_role,
           body.shop_person,
           body.f_propant_mass_nkt,
-          body.remarks,
           body.id_status,
           body.id_user
         ]
