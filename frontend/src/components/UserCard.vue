@@ -42,5 +42,6 @@ export default {
 .exit:hover {
   background: #3eaf7c;
   border: 1px solid #fff;
+  color: #fff;
 }
 </style>

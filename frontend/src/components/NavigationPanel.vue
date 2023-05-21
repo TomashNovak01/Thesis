@@ -3,10 +3,10 @@
     <div class="tabs logo" />
     <table class="tabs">
       <tr class="tab" :class="{ enter: enterFieldAct }">
-        <router-link to="/fieldact">Полевой акт</router-link>
+        <router-link class="link" to="/fieldact">Полевой акт</router-link>
       </tr>
       <tr class="tab" :class="{ enter: enterDictionary }">
-        <router-link to="/dictionary">Справочники</router-link>
+        <router-link class="link" to="/dictionary">Справочники</router-link>
       </tr>
     </table>
     <user-card />
@@ -79,9 +79,11 @@ export default {
   background: #ffa6006b;
 }
 
-router-link {
+.link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100%;
   width: 100%;
-  margin: 5px;
 }
 </style>
