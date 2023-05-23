@@ -1,6 +1,7 @@
 <template>
   <footer>
-    <v-btn v-if="!isTake && !isCorrect" class="icon take" title="Принять задачу" icon @click="take">
+    <div v-if="!isTake && !isCorrect && isEmployee">Исследователь не назначен</div>
+    <v-btn v-else-if="!isTake && !isCorrect" class="icon take" title="Принять задачу" icon @click="take">
       <icon width="25" icon="material-symbols:check-circle-outline" color="blue" />
     </v-btn>
     <div v-else class="footer">
@@ -8,7 +9,7 @@
       <div class="footer__item c">
         Исследователь: {{ researcher.surname }} {{ researcher.name }} {{ researcher.patronymic }}
       </div>
-      <v-btn v-if="isCurrentUser && data.id_status === 1" icon title="Отправить на согласование"
+      <v-btn v-if="isCurrentUser && data.id_status === 1 && !data.is_new" icon title="Отправить на согласование"
         @click="submitForApproval(2)">
         <icon width="25" icon="mdi:send" color="green" />
       </v-btn>
@@ -43,6 +44,10 @@ export default {
     isCurrentUser: {
       type: Boolean,
       default: false
+    },
+    isEmployee: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props, { emit }) {
@@ -59,8 +64,13 @@ export default {
     })
 
     const take = () => {
+      researcher.value = JSON.parse(localStorage.getItem("currentUser"));
+      props.data.id_user = researcher.value.id_code;
+      // store.dispatch("changeResearch", props.data);
+
+      emit("takeTask");
+
       isTake.value = true;
-      props.data.id_user = JSON.parse(localStorage.getItem("currentUser")).id_code;
     };
 
     const submitForApproval = (status) => {

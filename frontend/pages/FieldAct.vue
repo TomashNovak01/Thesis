@@ -36,17 +36,19 @@
           </template>
         </template>
         <template v-else-if="data.is_new">
-          <template v-if="isResearch">
+          <template v-if="isResearch && isCurrentUser">
             <field-act-templates :data="data" />
           </template>
+          <div v-else-if="isResearch" class="warning">Примите задачу чтобы выбрать шаблон</div>
           <div v-else class="warning">Полевой акт не создан</div>
         </template>
-        <field-act-footer class="fieldAct__footer" :data="data" :is-current-user="isCurrentUser" />
+        <field-act-footer class="fieldAct__footer" :data="data" :is-employee="isEmployee" :is-current-user="isCurrentUser"
+          @take-task="() => isCurrentUser = user" />
       </div>
       <div v-else class="warning">Выберете полевой акт</div>
     </v-card>
-    <v-dialog v-model="isAddFields" width="1000">
-      <field-act-dialog-fields :field-in-data="data.data" :research="data.research_id" @close="close" />
+    <v-dialog v-model=" isAddFields " width="1000">
+      <field-act-dialog-fields :field-in-data=" data.data " :research=" data.research_id " @close=" close " />
     </v-dialog>
   </div>
 </template>
@@ -84,6 +86,8 @@ export default {
     const table = ref(null);
 
     const isResearch = ref(user.role === "Исследователь");
+    const isEmployee = ref(user.role === "Сотрудник");
+
     const isAgreed = ref(false);
     const isEdit = ref(false);
     const isAddFields = ref(false);
@@ -95,7 +99,7 @@ export default {
     const selectTask = (task) => {
       data.value = task;
       isAgreed.value = data.value.id_status !== 1;
-      isCurrentUser.value = data.value.id_user !== null ? JSON.parse(localStorage.getItem("currentUser")).id_code === data.value.id_user : false
+      isCurrentUser.value = data.value.id_user !== null ? user.id_code === data.value.id_user : false
     };
 
     const saveAsExcel = () => saveExcel(data.value, table.value.selectedContract);
@@ -176,8 +180,10 @@ export default {
 
     return {
       data,
+      user,
       table,
       isResearch,
+      isEmployee,
       isAgreed,
       isEdit,
       isAddFields,
