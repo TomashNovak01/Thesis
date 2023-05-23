@@ -231,6 +231,6 @@ field-act-tabs-panel {
   position: fixed;
   right: 0;
   bottom: 0;
-  width: calc(100% - 337px);
+  width: calc(100% - 312px);
 }
 </style>

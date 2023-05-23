@@ -209,7 +209,7 @@ export default {
 }
 
 .panel {
-  max-width: 340px;
+  max-width: 312px;
   border-right: 1px solid orange;
   background: white;
 }
