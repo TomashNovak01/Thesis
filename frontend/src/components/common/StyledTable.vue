@@ -1,11 +1,11 @@
 <template>
-  <table class="styledTable">
+  <v-table class="styledTable" fixed-header height="800px">
     <colgroup v-if="columnWidths.length">
       <col v-for="(w, index) of columnWidths" :key="'col_' + index"
         :style="{ width: typeof w === 'number' ? w + '%' : w }" />
     </colgroup>
     <slot />
-  </table>
+  </v-table>
 </template>
 
 <script>
@@ -28,10 +28,15 @@ export default {
   font-weight: 400;
   font-style: normal;
   text-decoration: none;
+  margin-top: 15px;
 }
 
 .styledTable thead tr th {
   height: 30px;
+}
+
+.v-table.v-table--fixed-header > .v-table__wrapper > table > thead > tr > th {
+  text-align: center;
 }
 
 .styledTable thead tr:first-child th {
