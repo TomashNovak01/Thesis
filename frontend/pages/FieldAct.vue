@@ -13,10 +13,10 @@
               <v-btn icon title="Экспортировать в Excel" @click="saveAsExcel">
                 <icon icon="mdi:microsoft-excel" width="25" color="orange" />
               </v-btn>
-              <v-btn v-if="isResearch && !isAgreed && isCurrentUser" icon title="Скачать" @click="download">
+              <v-btn v-if="isResearch && !isAgreed && isCurrentUser" icon title="Скачать .ppgrp_fa" @click="download">
                 <icon icon="mdi:download" width="25" color="orange" />
               </v-btn>
-              <v-btn v-if="isResearch && !isAgreed && isCurrentUser" icon title="Загрузить" @click="upload">
+              <v-btn v-if="isResearch && !isAgreed && isCurrentUser" icon title="Загрузить .ppgrp_fa" @click="upload">
                 <icon icon="mdi:upload" width="25" color="orange" />
               </v-btn>
               <v-btn v-if="isResearch && !isAgreed && isCurrentUser" icon :title="title" @click="edit">
