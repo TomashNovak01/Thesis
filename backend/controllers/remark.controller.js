@@ -6,7 +6,6 @@ class RemarkController {
       const { id_user, remarks, date, research_id, file_name } = req.body;
       const file_bin = !!file_name && req.file ? req.file.buffer : null;
 
-
       if (id_user === null || !date || !research_id)
         throw new Error("Недостаточно данных");
 
@@ -87,7 +86,7 @@ class RemarkController {
         responseRemarks.push({
           ...r,
           file_name: file.rows.length ? file.rows[0].name : null,
-          file_bin: file.rows.length ? file.rows[0].bin : null,
+          file_bin: file.rows.length ? file.rows[0].bin.toString("base64") : null,
         });
       }
 

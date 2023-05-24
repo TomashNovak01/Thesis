@@ -17,7 +17,7 @@
                 {{ remark.remarks }}
                 <!-- <p>{{ remark.file_bin }}</p> -->
                 <p v-if="remark.file_bin" class="message_link">
-                  <a :href="'data:application/text;charset=utf-8,' + remark.file_bin.data" :download="remark.file_name">
+                  <a :href="'data:application/text;base64,' + remark.file_bin" :download="remark.file_name">
                     {{ remark.file_name }}
                   </a>
                 </p>
@@ -104,6 +104,7 @@ export default {
 
       store.dispatch("addRemark", formData);
       store.dispatch("fillRemarks");
+      remarks.value = computed(() => store.getters.getResearchRemarks.filter((r) => r.research_id === props.data.research_id));
 
       text.value = "";
       selectedFile.value = null;
