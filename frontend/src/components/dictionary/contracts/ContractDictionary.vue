@@ -115,7 +115,8 @@ export default {
     };
 
     const editContract = (contract = null) => {
-      if (contract) isEdit.value = true;
+      isEdit.value = !!contract ? true : false;
+
       editorDialog.value = true;
       editingContract.value = contract;
     };

@@ -3,7 +3,13 @@ const db = require("../db");
 class ContractController {
   async getContracts(req, res, next) {
     try {
-      const contracts = await db.query(`select * from public."contract"`);
+      const contracts = await db.query(
+        `
+          select *
+          from public."contract"
+          order by date desc
+        `
+      );
       res.json(contracts.rows);
     } catch (error) {
       next(error);

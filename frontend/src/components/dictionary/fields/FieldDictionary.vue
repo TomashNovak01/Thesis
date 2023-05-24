@@ -133,7 +133,8 @@ export default {
     };
 
     const editField = (field = null) => {
-      if (field) isEdit.value = true;
+      isEdit.value = !!field ? true : false;
+
       editorDialog.value = true;
       editingField.value = field;
     };

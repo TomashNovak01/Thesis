@@ -45,7 +45,7 @@
         <field-act-footer class="fieldAct__footer" :data="data" :is-employee="isEmployee" :is-current-user="isCurrentUser"
           @take-task="() => isCurrentUser = user" />
       </div>
-      <div v-else class="warning">Выберете полевой акт</div>
+      <div v-else class="warning">Выберите полевой акт</div>
     </v-card>
     <v-dialog v-model=" isAddFields " width="1000">
       <field-act-dialog-fields :field-in-data=" data.data " :research=" data.research_id " @close=" close " />

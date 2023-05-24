@@ -33,8 +33,8 @@
         </small>
       </div>
       <div class="field">
-        <v-text-field v-model.trim="v$.unit.$model" label="Единица измерения" placeholder="Введите единицу измерения"
-          clearable variant="outlined" />
+        <v-autocomplete v-model.number="v$.unit.$model" clearable label="Единица измерения"
+          placeholder="Введите единицу измерения" :items="units" variant="outlined" />
         <small v-for="error of v$.unit.$errors" :key="error.$uid" class="error">
           {{ error.$message }}
         </small>
@@ -52,6 +52,7 @@ import { useStore } from "vuex";
 import { reactive, computed } from 'vue';
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from "@vuelidate/validators"
+import { toast } from "vue3-toastify";
 
 export default {
   props: {
@@ -66,6 +67,8 @@ export default {
   },
   setup(props, { emit }) {
     const blocks = [10, 20, 30, 40, 50];
+    const units = ["опер.", "м3", "м", "шт.", "кг/л", "тн"];
+
     let editingField = reactive(
       JSON.parse(JSON.stringify(props.field ||
       {
@@ -80,8 +83,8 @@ export default {
 
     const isMoreZero = (value) => value !== 0;
     const rules = computed(() => ({
+      value_full: {},
       value_short: { required: helpers.withMessage('Введите укороченное наименование', required) },
-      value_full: { required: helpers.withMessage('Введите полное наименование', required) },
       sequence: { required: helpers.withMessage('Введите порядковый номер', required) },
       block_id: {
         required: helpers.withMessage('Введите номер блока', required),
@@ -93,18 +96,35 @@ export default {
     const v$ = useVuelidate(rules, editingField);
 
     const store = useStore();
+    const fields = computed(() => store.getters.getFields);
 
     const saveField = () => {
       v$.value.$touch();
       if (v$.value.$error) return;
 
-      if (props.isEdit) store.dispatch("changeField", editingField)
-      else store.dispatch("addField", editingField);
+      const field = {
+        value_full: editingField.value_full || editingField.value_short,
+        value_short: editingField.value_short,
+        sequence: editingField.sequence,
+        block_id: editingField.block_id,
+        unit: editingField.unit,
+      }
+
+      if (!!fields.value.find((f) => f.value_full === field.value_full && f.value_short === field.value_short)) {
+        toast.error("Поле с такими наименованиями уже существует");
+        return;
+      } else if (!!fields.value.find((f) => f.sequence === field.sequence)) {
+        toast.error("Поле с таким порядковым номером уже существует");
+        return;
+      }
+
+      if (props.isEdit) store.dispatch("changeField", field)
+      else store.dispatch("addField", field);
 
       emit("close");
     }
 
-    return { blocks, v$, saveField }
+    return { blocks, units, v$, saveField }
   }
 }
 </script>

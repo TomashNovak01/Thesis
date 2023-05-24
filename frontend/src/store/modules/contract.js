@@ -74,6 +74,7 @@ export default {
       state.contracts.splice(index, 1);
     },
     ADD_CONTRACT(state, contract) {
+      console.log(contract);
       state.contracts.push(contract);
     },
     CHANGE_CONTRACT(state, { index, contract }) {

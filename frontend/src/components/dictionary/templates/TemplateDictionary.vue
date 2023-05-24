@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, watchEffect } from "vue";
 import { useStore } from "vuex";
 import StyledTable from '../../common/StyledTable.vue'
 import TemplateDialog from "./TemplateDialog.vue";
@@ -90,8 +90,6 @@ export default {
 
     const templates = ref([]);
 
-    onMounted(() => updateTemplates());
-
     const store = useStore();
     const res = computed(() => store.getters.getTemplates);
 
@@ -107,7 +105,8 @@ export default {
     const editingTemplate = ref(null);
 
     const editTemplate = (template = null) => {
-      if (template) isEdit.value = true;
+      isEdit.value = !!template ? true : false;
+
       editorDialog.value = true;
       editingTemplate.value = template;
     };
@@ -141,6 +140,8 @@ export default {
       editorDialog.value = false;
       updateTemplates();
     }
+
+    watchEffect(() => updateTemplates());
 
     return {
       search,

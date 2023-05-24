@@ -34,6 +34,7 @@ import { useStore } from "vuex";
 import { reactive, computed } from 'vue';
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from "@vuelidate/validators"
+import { toast } from "vue3-toastify";
 
 export default {
   props: {
@@ -65,6 +66,7 @@ export default {
     const v$ = useVuelidate(rules, editingTemplate);
 
     const store = useStore();
+    const templates = computed(() => store.getters.getTemplates);
     const fields = computed(() => store.getters.getFields);
 
     const toggle = (field, template) => {
@@ -79,6 +81,11 @@ export default {
     const saveTemplate = () => {
       v$.value.$touch();
       if (v$.value.$error) return;
+
+      if (!!templates.value.find((t) => t.name === editingTemplate.name)) {
+        toast.error("Шаблон с таким названием уже существует");
+        return;
+      }
 
       if (props.isEdit) store.dispatch("changeTemplate", editingTemplate)
       else store.dispatch("addTemplate", editingTemplate);
