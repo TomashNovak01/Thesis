@@ -1,5 +1,6 @@
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
+import dayjs from "dayjs";
 
 export default async (data, contract) => {
   const workbook = new ExcelJS.Workbook();
@@ -87,7 +88,7 @@ export default async (data, contract) => {
   sheet.addRows([
     { 1: "ОТЧЁТ О ВЫПОЛНЕННЫХ УСЛУГАХ ПО ГИДРОРАЗРЫВУ ПЛАСТА" },
     { 1: "Подрядчик:", 2: data.contractor },
-    { 1: "Договор", 2: contract.value_short, 3: "от", 4: contract.date },
+    { 1: "Договор", 2: contract.value_short, 3: "от", 4: dayjs(contract.date).format("DD.MM.YYYY") },
     { 1: "Месторождение", 2: data.oilfield },
     { 1: "Скважина", 2: data.well_name },
     { 1: "Куст:", 2: data.cluster },
@@ -190,7 +191,7 @@ export default async (data, contract) => {
       15:
         !field.redesign || !getFactMB(field)
           ? "-"
-          : Math.round((getFactMB(field) / r.redesign) * 1000) / 100,
+          : Math.round((getFactMB(field) / field.redesign) * 1000) / 100,
       16: getToPay(field),
       18: isFixedField(field) ? "-" : factPerc.value,
       19: redPerc.value,
@@ -276,7 +277,7 @@ export default async (data, contract) => {
     };
   };
 
-  sheet.addRow([
+  sheet.addRows([
     {},
     { 11: "вид осложнения", 14: "-" },
     { 11: "всего пропанта с поверхности", 14: getFactMB(propants) },
@@ -338,7 +339,7 @@ export default async (data, contract) => {
 
   linesBefore = sheet.lastRow._number;
 
-  sheet.addRow([
+  sheet.addRows([
     { 1: "Подрядчик", 7: "Заказчик", 13: "Заказчик" },
     {
       1: "Должность:",
