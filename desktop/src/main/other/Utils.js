@@ -22,11 +22,13 @@ async function SetupDirectory() {
 async function WriteFile({
   FILE_NAME,
   data,
-  MODULE_DIR_NAME = "FiledAct",
+  MODULE_DIR_NAME = "FieldAct",
   PATH,
 }) {
   try {
     let FILE_PATH;
+
+    console.log(data);
 
     if (!FILE_NAME && PATH) FILE_PATH = PATH;
     else if (FILE_NAME) {
@@ -47,20 +49,20 @@ async function WriteFile({
 async function ReadFile({
   FILE_NAME = false,
   MODULE_DIR_NAME = "FieldAct",
-  PATH = false,
+  FILE_PATH = false,
 }) {
   try {
-    let FILE_PATH;
+    let PATH;
 
-    if (!FILE_NAME && PATH) FILE_PATH = PATH;
+    if (!FILE_NAME && FILE_PATH) PATH = FILE_PATH;
     else if (FILE_NAME) {
       const WORK_DIR = app.getPath("userData");
       const MODULE_DIR = path.join(WORK_DIR, MODULE_DIR_NAME);
 
-      FILE_PATH = path.join(MODULE_DIR, FILE_NAME);
+      PATH = path.join(MODULE_DIR, FILE_NAME);
     } else throw new Error("Не достаточно данных для получения файла");
 
-    const data = await fsPromise.readFile(FILE_PATH);
+    const data = await fsPromise.readFile(PATH);
     return JSON.parse(data);
   } catch (error) {
     console.log(error);

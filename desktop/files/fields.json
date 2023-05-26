@@ -1,0 +1,154 @@
+[
+  {
+    "id_code": 4,
+    "value_short": "Базовая сервисная ставка",
+    "value_full": "Базовая сервисная ставка",
+    "sequence": 10,
+    "block_id": 10,
+    "unit": "опер."
+  },
+  {
+    "id_code": 5,
+    "value_short": "Базовая ставка для второй",
+    "value_full": "Базовая ставка для второй",
+    "sequence": 20,
+    "block_id": 10,
+    "unit": "опер."
+  },
+  {
+    "id_code": 0,
+    "value_short": "МИНИ-ГРП",
+    "value_full": "МИНИ-ГРП",
+    "sequence": 30,
+    "block_id": 10,
+    "unit": "опер."
+  },
+  {
+    "id_code": 1,
+    "value_short": "Хим. машина",
+    "value_full": "Хим. машина",
+    "sequence": 60,
+    "block_id": 20,
+    "unit": "опер."
+  },
+  {
+    "id_code": 3,
+    "value_short": "Вакуумная установка",
+    "value_full": "Вакуумная установка",
+    "sequence": 70,
+    "block_id": 20,
+    "unit": "опер."
+  },
+  {
+    "id_code": 2,
+    "value_short": "Песколента",
+    "value_full": "Песколента",
+    "sequence": 110,
+    "block_id": 20,
+    "unit": "опер."
+  },
+  {
+    "id_code": 20,
+    "value_short": "Завоз воды на куст",
+    "value_full": "Завоз воды на куст",
+    "sequence": 510,
+    "block_id": 30,
+    "unit": "м3"
+  },
+  {
+    "id_code": 21,
+    "value_short": "Нагрев воды на куст",
+    "value_full": "Нагрев воды на куст",
+    "sequence": 520,
+    "block_id": 30,
+    "unit": "м3"
+  },
+  {
+    "id_code": 22,
+    "value_short": "Лифт ГРП/Технологические НКТ",
+    "value_full": "Лифт ГРП/Технологические НКТ",
+    "sequence": 530,
+    "block_id": 30,
+    "unit": "м"
+  },
+  {
+    "id_code": 23,
+    "value_short": "Технологическое НКТ (за метр)",
+    "value_full": "Технологическое НКТ (за метр)",
+    "sequence": 540,
+    "block_id": 30,
+    "unit": "м"
+  },
+  {
+    "id_code": 19,
+    "value_short": "Арматура ГРП",
+    "value_full": "Арматура ГРП",
+    "sequence": 550,
+    "block_id": 30,
+    "unit": "шт."
+  },
+  {
+    "id_code": 6,
+    "value_short": "Гелант",
+    "value_full": "Гелант",
+    "sequence": 610,
+    "block_id": 40,
+    "unit": "кг/л"
+  },
+  {
+    "id_code": 12,
+    "value_short": "Сшиватель",
+    "value_full": "Сшиватель",
+    "sequence": 620,
+    "block_id": 40,
+    "unit": "кг/л"
+  },
+  {
+    "id_code": 13,
+    "value_short": "Брейкер",
+    "value_full": "Брейкер",
+    "sequence": 630,
+    "block_id": 40,
+    "unit": "кг/л"
+  },
+  {
+    "id_code": 14,
+    "value_short": "Активатор брейкера",
+    "value_full": "Активатор брейкера",
+    "sequence": 640,
+    "block_id": 40,
+    "unit": "кг/л"
+  },
+  {
+    "id_code": 15,
+    "value_short": "16/30",
+    "value_full": "16/30",
+    "sequence": 700,
+    "block_id": 50,
+    "unit": "тн"
+  },
+  {
+    "id_code": 16,
+    "value_short": "16/20",
+    "value_full": "16/20",
+    "sequence": 710,
+    "block_id": 50,
+    "unit": "тн"
+  },
+  {
+    "id_code": 17,
+    "value_short": "20/40",
+    "value_full": "20/40",
+    "sequence": 720,
+    "block_id": 50,
+    "unit": "тн"
+  },
+  {
+    "id_code": 18,
+    "value_short": "30/50",
+    "value_full": "30/50",
+    "sequence": 730,
+    "block_id": 50,
+    "unit": "тн"
+  }
+]

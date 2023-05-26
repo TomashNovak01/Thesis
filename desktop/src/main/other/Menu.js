@@ -1,4 +1,4 @@
-const { Menu, shell, app } = require("electron");
+const { Menu, app } = require("electron");
 const path = require("path");
 
 function setMenu(mainWindow) {
@@ -25,7 +25,7 @@ function setMenu(mainWindow) {
         click: () => {
           if (process.env.NODE_ENV === "development")
             mainWindow.loadURL("http://localhost:3000");
-          else mainWindow.loadURL("http://localhost:3000"); // ссылка на сайт
+          else mainWindow.loadURL("http://192.168.0.32:3000");
 
           useTemplate("web");
         },
@@ -66,4 +66,4 @@ function setMenu(mainWindow) {
   useTemplate("web");
 }
 
-exports.setMenu = setMenu;
+module.exports = { setMenu };

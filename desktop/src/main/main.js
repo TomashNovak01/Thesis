@@ -22,8 +22,8 @@ function createWindow() {
     },
     icon:
       process.env.NODE_ENV === "development"
-        ? path.join(process.cwd(), "src/renderer/static/favicon.png")
-        : path.join(__dirname, "build/favicon.png"),
+        ? path.join(process.cwd(), "src/renderer/assets/logo.webp")
+        : path.join(__dirname, "src/renderer/assets/logo.webp"),
   });
 
   if (process.env.NODE_ENV === "development")
@@ -33,13 +33,9 @@ function createWindow() {
   setMenu(mainWindow);
   SetupDirectory();
 
-  ipcMain.on("goTo", (event, url) => {
-    mainWindow.loadURL(url);
-  });
+  ipcMain.on("goTo", (event, url) => mainWindow.loadURL(url));
 
-  mainWindow.once("ready-to-show", () => {
-    mainWindow.show();
-  });
+  mainWindow.once("ready-to-show", () => mainWindow.show());
 }
 
 app.whenReady().then(() => {

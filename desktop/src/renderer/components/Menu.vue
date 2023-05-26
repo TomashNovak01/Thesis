@@ -8,10 +8,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(file, index) in files" :key="file.fileName" :class="{
+      <tr v-for="(file, index) in files" :key="file.FILE_PATH" :class="{
         active__row: activeIndex === index,
         row_before_active: index === activeIndex - 1,
-      }" @click.prevent="selectFile(index, file.FILE_PATH)">
+      }" @click.prevent="selectFile(index, file.FILE_PATH, file)">
         <td class="first">{{ file.research_id }}</td>
         <td>{{ file.well_name }}</td>
         <td>{{ file.oilfield }}</td>
@@ -28,16 +28,15 @@ export default {
   props: {
     files: {
       type: Array,
-      default: []
+      required: true,
+      default: () => []
     }
   },
   setup(props, { emit }) {
     const activeIndex = ref("");
 
-    console.log(props.files);
-
-    const selectFile = async (index, path) => {
-      const file = await window.electronAPI.readFile({ path });
+    const selectFile = async (index, path, f) => {
+      const file = await window.electronAPI.readFileOnPath(path);
       activeIndex.value = index;
       emit("setFile", { file, path })
     }

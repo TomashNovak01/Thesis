@@ -1,0 +1,86 @@
+[
+  {
+    "id_code": 4,
+    "value_short": "17544",
+    "value_full": "Договор № 17544",
+    "date": "2023-06-13T19:00:00.000Z"
+  },
+  {
+    "id_code": 17,
+    "value_short": "684",
+    "value_full": "Договор №684",
+    "date": "2023-05-28T19:00:00.000Z"
+  },
+  {
+    "id_code": 20,
+    "value_short": "74",
+    "value_full": "Договор №74",
+    "date": "2023-05-23T19:00:00.000Z"
+  },
+  {
+    "id_code": 22,
+    "value_short": "187",
+    "value_full": "Договор №187",
+    "date": "2023-05-23T19:00:00.000Z"
+  },
+  {
+    "id_code": 21,
+    "value_short": "149",
+    "value_full": "Договор №149",
+    "date": "2023-05-23T19:00:00.000Z"
+  },
+  {
+    "id_code": 13,
+    "value_short": "999",
+    "value_full": "Договор №999",
+    "date": "2023-05-20T19:00:00.000Z"
+  },
+  {
+    "id_code": 2,
+    "value_short": "174",
+    "value_full": "Договор № 174",
+    "date": "2023-04-16T19:00:00.000Z"
+  },
+  {
+    "id_code": 3,
+    "value_short": "514",
+    "value_full": "Договор № 514",
+    "date": "2023-01-23T19:00:00.000Z"
+  },
+  {
+    "id_code": 0,
+    "value_short": "471",
+    "value_full": "Договор № 471",
+    "date": "2022-11-21T19:00:00.000Z"
+  },
+  {
+    "id_code": 1,
+    "value_short": "1534",
+    "value_full": "Договор № 1534",
+    "date": "2022-10-19T19:00:00.000Z"
+  },
+  {
+    "id_code": 15,
+    "value_short": "14",
+    "value_full": "Договор №14",
+    "date": "2022-08-24T19:00:00.000Z"
+  },
+  {
+    "id_code": 5,
+    "value_short": "28941",
+    "value_full": "Договор №28941",
+    "date": "2022-08-19T19:00:00.000Z"
+  },
+  {
+    "id_code": 16,
+    "value_short": "10",
+    "value_full": "Договор №10",
+    "date": "2022-07-18T19:00:00.000Z"
+  },
+  {
+    "id_code": 14,
+    "value_short": "41",
+    "value_full": "Договор №41",
+    "date": "2022-05-12T19:00:00.000Z"
+  }
+]

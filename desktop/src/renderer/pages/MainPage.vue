@@ -2,33 +2,44 @@
   <div class="fieldAct">
     <div v-if="!files.length" class="noFiles">
       <h2>Выберите файл полевого акта</h2>
-      <button @click="chooseFile">Выбрать</button>
+      <btn @click="chooseFile">Выбрать</btn>
     </div>
     <template v-else>
       <div class="fieldAct_left">
-        <menu :files="files" @set-file="(file) => setFile(file)" />
+        <Menu :files="files" @set-file="(file) => setFile(file)" />
       </div>
       <div class="fieldAct_right">
-
+        <div v-if="current_file">
+          <div class="fieldAct_right_header">
+            <btn @click="save">Сохранить</btn>
+            <DialogFields :data="current_file.data" :research="current_file.research_id" />
+          </div>
+          <Table :data="current_file" class="fieldAct_right_body" />
+        </div>
+        <div v-else>
+          <h1>Выберите файл</h1>
+        </div>
       </div>
     </template>
   </div>
 </template>
 
 <script setup>
-import Menu from "../components/Menu.vue";
 import { ref, onMounted } from "vue";
+import Menu from "../components/Menu.vue";
+import Table from "../components/Table.vue";
+import DialogFields from "../components/DialogFields.vue";
 
 const files = ref([]);
-const current_file = ref({});
-let current_file_path = ref("");
+const current_file = ref(null);
+const current_file_path = ref("");
 
 onMounted(async () => {
   const data = await window.electronAPI.readFile({
     FILE_NAME: "FieldActList.json",
   });
 
-  files.value = data;
+  files.value = data || [];
 
   window.electronAPI.triggerSelectFileDialog(async (event) => {
     await chooseFile();
@@ -37,12 +48,12 @@ onMounted(async () => {
 
 const setFile = ({ file, path }) => {
   current_file.value = file;
-  current_file_path = path;
+  current_file_path.value = path;
 }
 
 const chooseFile = async () => {
   const file = await window.electronAPI.chooseFile({
-    title: "Выберете полевой акт",
+    title: "Выберите полевой акт",
     filters: [
       {
         name: "Полевые акты",
@@ -58,6 +69,7 @@ const chooseFile = async () => {
   if (!file.canceled) {
     for (const path of file.filePaths) {
       const data = await window.electronAPI.readFileOnPath(path);
+
       const { research_id, well_name, oilfield } = data;
       const meta = {
         research_id: research_id,
@@ -105,14 +117,26 @@ const chooseFile = async () => {
     };
   };
 };
+
+const save = async () => {
+  await window.electronAPI.writeFile({
+    FILE_NAME: current_file_path.value.split("\\").slice(-1)[0],
+    data: JSON.parse(JSON.stringify(current_file.value)),
+    PATH: current_file_path.value
+  });
+
+  new Notification("Полевой акт сохранен");
+}
 </script>
 
 <style lang="scss">
 .fieldAct {
   margin: 10px;
+  background: white;
   width: calc(100vw - 20px);
-  height: calc(100vw - 20px);
+  height: calc(100vh - 20px);
   border: 1px solid #1976d2;
+  border-radius: 15px;
   display: flex;
 
   .noFiles {
@@ -131,11 +155,21 @@ const chooseFile = async () => {
     max-width: 100%;
     max-height: 100%;
     margin-left: 10px;
-    min-width: calc(100% - 340px);
+    min-width: calc(100% - 285px);
+
+    &_header {
+      display: flex;
+      justify-content: space-around;
+      border-bottom: 1px solid orange;
+      padding-top: 5px;
+      padding-bottom: 10px;
+      margin-bottom: 5px;
+      width: 100%;
+    }
   }
 
   &_left {
-    width: 330px;
+    width: 300px;
     height: 100%;
     border-right: 1px solid orange;
     overflow-y: overlay;
