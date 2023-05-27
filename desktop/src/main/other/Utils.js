@@ -28,9 +28,7 @@ async function WriteFile({
   try {
     let FILE_PATH;
 
-    console.log(data);
-
-    if (!FILE_NAME && PATH) FILE_PATH = PATH;
+    if (!FILE_NAME && !!PATH) FILE_PATH = PATH;
     else if (FILE_NAME) {
       const WORK_DIR = app.getPath("userData");
       const MODULE_DIR = path.join(WORK_DIR, MODULE_DIR_NAME);
@@ -41,6 +39,8 @@ async function WriteFile({
     const payload =
       typeof data === "string" ? data : JSON.stringify(data, null, 2);
     await fsPromise.writeFile(FILE_PATH, payload);
+
+    console.log(FILE_PATH);
   } catch (error) {
     console.log(error);
   }

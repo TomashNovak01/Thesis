@@ -66,7 +66,7 @@ export default {
     const take = () => {
       researcher.value = JSON.parse(localStorage.getItem("currentUser"));
       props.data.id_user = researcher.value.id_code;
-      // store.dispatch("changeResearch", props.data);
+      store.dispatch("changeResearch", props.data);
 
       emit("takeTask");
 

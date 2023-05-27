@@ -5,7 +5,7 @@
         <h1>Авторизация пользователя</h1>
         <div class="form-control">
           <label for="email">Логин или почта:</label>
-          <input type="text" id="email" v-model="form.email.value" @blur="form.email.blur" />
+          <input type="text" id="email" v-model.trim="form.email.value" @blur="form.email.blur" />
           <small v-if="form.email.touched && form.email.errors.required">Введите свою почту</small>
         </div>
         <div class="form-control">

@@ -2,7 +2,7 @@
   <div>
     <header>
       <div>Договоры полевого акта</div>
-      <input type="text" class="search" placeholder="Поиск" v-model="search">
+      <input type="text" class="search" placeholder="Поиск" v-model.trim="search">
       <v-icon v-if="canEdit" color="orange" icon="mdi-plus" @click="editContract(null)" />
     </header>
     <v-divider />

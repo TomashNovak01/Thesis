@@ -15,7 +15,6 @@
               :subtitle="dayjs(remark.date).format('DD.MM.YYYY')" :elevation="2" class="message">
               <v-card-text>
                 {{ remark.remarks }}
-                <!-- <p>{{ remark.file_bin }}</p> -->
                 <p v-if="remark.file_bin" class="message_link">
                   <a :href="'data:application/text;base64,' + remark.file_bin" :download="remark.file_name">
                     {{ remark.file_name }}
@@ -35,17 +34,17 @@
             </div>
           </template>
         </v-card-text>
-        <v-card-actions style="display: flex; justify-content: space-between;">
-          <v-btn icon @click="fileInput.click()" style="vertical-align: top;">
+        <v-card-actions style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <v-btn icon @click="fileInput.click()" style="align-self: flex-start;">
             <icon width="35" icon="mdi:paperclip" color="orange" />
           </v-btn>
           <input v-show="false" ref="fileInput" type="file" accept="text/*" multiple @change="filesPush" />
           <div style="width: 100%;">
-            <v-text-field v-model="text" placeholder="Сообщение" variant="outlined" clearable style="margin: 0 10px;"
+            <v-text-field v-model.trim="text" placeholder="Сообщение" variant="outlined" clearable style="margin: 0 10px;"
               @keyup.enter="sendMessage" />
             <small class="error">{{ error }}</small>
           </div>
-          <v-btn icon @click="sendMessage" style="vertical-align: top;">
+          <v-btn icon @click="sendMessage" style="align-self: flex-start;">
             <icon width="35" icon="mdi:send-circle" color="orange" />
           </v-btn>
         </v-card-actions>
@@ -146,10 +145,12 @@ export default {
   scroll-behavior: smooth;
   border: 1px solid gainsboro;
   border-radius: 10px;
+  transform: scaleY(-1);
 }
 
 .message {
   margin: 5px;
+  transform: scaleY(-1);
 }
 
 .file {

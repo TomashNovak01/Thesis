@@ -95,6 +95,8 @@ export default {
       }
 
       props.data.is_new = false;
+
+      store.dispatch("changeResearch", props.data)
     }
 
     return {

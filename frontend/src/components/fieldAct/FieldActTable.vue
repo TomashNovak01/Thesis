@@ -178,7 +178,7 @@
             <td class="bto" colspan="3">пропант в нкт</td>
             <td class="bto" colspan="2">
               <template v-if="!isEdit">{{ data.f_propant_mass_nkt }}</template>
-              <input v-else v-model="data.f_propant_mass_nkt" class="table_input" />
+              <input v-else v-model.trim="data.f_propant_mass_nkt" class="table_input" />
             </td>
           </tr>
           <tr>
@@ -193,34 +193,34 @@
             <td class="br-0 ta-l">Должность:</td>
             <td class="bl-0 ta-l" colspan="5">
               <template v-if="!isEdit">{{ data.executer_role }}</template>
-              <input v-else v-model="data.executer_role" class="table_input" />
+              <input v-else v-model.trim="data.executer_role" class="table_input" />
             </td>
             <td class="br-0 ta-l">Должность:</td>
             <td class="bl-0 ta-l" colspan="5">
               <template v-if="!isEdit">{{ data.client_role }}</template>
-              <input v-else v-model="data.client_role" class="table_input" />
+              <input v-else v-model.trim="data.client_role" class="table_input" />
             </td>
             <td class="br-0 ta-l">Должность:</td>
             <td class="bl-0 ta-l" colspan="5">
               <template v-if="!isEdit">{{ data.shop_role }}</template>
-              <input v-else v-model="data.shop_role" class="table_input" />
+              <input v-else v-model.trim="data.shop_role" class="table_input" />
             </td>
           </tr>
           <tr style="height: 36px">
             <td class="br-0 ta-l">ФИО:</td>
             <td class="br-0 ta-l" colspan="5">
               <template v-if="!isEdit">{{ data.executer_person }}</template>
-              <input v-else v-model="data.executer_person" class="table_input" />
+              <input v-else v-model.trim="data.executer_person" class="table_input" />
             </td>
             <td class="br-0 ta-l">ФИО:</td>
             <td class="br-0 ta-l" colspan="5">
               <template v-if="!isEdit">{{ data.client_person }}</template>
-              <input v-else v-model="data.client_person" class="table_input" />
+              <input v-else v-model.trim="data.client_person" class="table_input" />
             </td>
             <td class="br-0 ta-l">ФИО:</td>
             <td class="ta-l" colspan="5">
               <template v-if="!isEdit">{{ data.shop_person }}</template>
-              <input v-else v-model="data.shop_person" class="table_input" />
+              <input v-else v-model.trim="data.shop_person" class="table_input" />
             </td>
           </tr>
           <tr style="height: 36px">

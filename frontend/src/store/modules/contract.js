@@ -1,5 +1,6 @@
 import axios from "axios";
 import { toast } from "vue3-toastify";
+import dayjs from "dayjs";
 
 export default {
   actions: {
@@ -35,7 +36,7 @@ export default {
           .then((response) =>
             commit("ADD_CONTRACT", {
               id_code: response.data.id_code,
-              ...contract,
+              ...contract
             })
           );
 
@@ -74,7 +75,6 @@ export default {
       state.contracts.splice(index, 1);
     },
     ADD_CONTRACT(state, contract) {
-      console.log(contract);
       state.contracts.push(contract);
     },
     CHANGE_CONTRACT(state, { index, contract }) {

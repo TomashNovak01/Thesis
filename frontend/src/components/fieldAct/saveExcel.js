@@ -88,13 +88,22 @@ export default async (data, contract) => {
   sheet.addRows([
     { 1: "ОТЧЁТ О ВЫПОЛНЕННЫХ УСЛУГАХ ПО ГИДРОРАЗРЫВУ ПЛАСТА" },
     { 1: "Подрядчик:", 2: data.contractor },
-    { 1: "Договор", 2: contract.value_short, 3: "от", 4: dayjs(contract.date).format("DD.MM.YYYY") },
+    {
+      1: "Договор",
+      2: contract.value_short,
+      3: "от",
+      4: !!contract.date ? dayjs(contract.date).format("DD.MM.YYYY") : "",
+    },
     { 1: "Месторождение", 2: data.oilfield },
     { 1: "Скважина", 2: data.well_name },
     { 1: "Куст:", 2: data.cluster },
     { 1: "Пласт:", 2: data.objects },
     {},
-    { 1: "Дата ГРП", 2: data.grp_date, 8: "мат. баланс" },
+    {
+      1: "Дата ГРП",
+      2: !!data.grp_date ? dayjs(data.grp_date).format("DD.MM.YYYY") : "",
+      8: "мат. баланс",
+    },
     {
       1: "оборудование и материалы",
       7: "ед.изм",

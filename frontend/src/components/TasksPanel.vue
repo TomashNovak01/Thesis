@@ -8,7 +8,7 @@
           <v-icon color="orange" icon="mdi-plus" />
         </v-btn>
       </div>
-      <input type="text" class="search" placeholder="Поиск" v-model="search">
+      <input type="text" class="search" placeholder="Поиск" v-model.trim="search">
     </header>
     <v-divider />
     <table>

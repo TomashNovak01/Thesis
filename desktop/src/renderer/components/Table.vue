@@ -163,7 +163,7 @@
           <td class="noBorder" colspan="9" />
           <td class="bto" colspan="3">пропант в нкт</td>
           <td class="bto" colspan="2">
-            <input v-model="data.f_propant_mass_nkt" class="table_input" />
+            <input v-model.number="data.f_propant_mass_nkt" class="table_input" />
           </td>
         </tr>
         <tr>
@@ -177,29 +177,29 @@
         <tr style="height: 36px">
           <td class="br-0 ta-l">Должность:</td>
           <td class="bl-0 ta-l" colspan="5">
-            <input v-model="data.executer_role" class="table_input" />
+            <input v-model.trim="data.executer_role" class="table_input" />
           </td>
           <td class="br-0 ta-l">Должность:</td>
           <td class="bl-0 ta-l" colspan="5">
-            <input v-model="data.client_role" class="table_input" />
+            <input v-model.trim="data.client_role" class="table_input" />
           </td>
           <td class="br-0 ta-l">Должность:</td>
           <td class="bl-0 ta-l" colspan="5">
-            <input v-model="data.shop_role" class="table_input" />
+            <input v-model.trim="data.shop_role" class="table_input" />
           </td>
         </tr>
         <tr style="height: 36px">
           <td class="br-0 ta-l">ФИО:</td>
           <td class="br-0 ta-l" colspan="5">
-            <input v-model="data.executer_person" class="table_input" />
+            <input v-model.trim="data.executer_person" class="table_input" />
           </td>
           <td class="br-0 ta-l">ФИО:</td>
           <td class="br-0 ta-l" colspan="5">
-            <input v-model="data.client_person" class="table_input" />
+            <input v-model.trim="data.client_person" class="table_input" />
           </td>
           <td class="br-0 ta-l">ФИО:</td>
           <td class="ta-l" colspan="5">
-            <input v-model="data.shop_person" class="table_input" />
+            <input v-model.trim="data.shop_person" class="table_input" />
           </td>
         </tr>
         <tr style="height: 36px">

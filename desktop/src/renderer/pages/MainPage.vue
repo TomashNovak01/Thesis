@@ -120,12 +120,15 @@ const chooseFile = async () => {
 
 const save = async () => {
   await window.electronAPI.writeFile({
-    FILE_NAME: current_file_path.value.split("\\").slice(-1)[0],
+    // FILE_NAME: current_file_path.value.split("\\").slice(-1)[0],
     data: JSON.parse(JSON.stringify(current_file.value)),
     PATH: current_file_path.value
   });
 
-  new Notification("Полевой акт сохранен");
+  await window.electronAPI.showMessageBox({
+    title: "Полевой акт сохранён",
+    message: `Вы успешно сохранили полевой акт №${current_file.value.research_id}`
+  })
 }
 </script>
 

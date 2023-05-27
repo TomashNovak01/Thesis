@@ -47,8 +47,8 @@
       </div>
       <div v-else class="warning">Выберите полевой акт</div>
     </v-card>
-    <v-dialog v-model=" isAddFields " width="1000">
-      <field-act-dialog-fields :field-in-data=" data.data " :research=" data.research_id " @close=" close " />
+    <v-dialog v-model="isAddFields" width="1000">
+      <field-act-dialog-fields :field-in-data="data.data" :research="data.research_id" @close="close" />
     </v-dialog>
   </div>
 </template>

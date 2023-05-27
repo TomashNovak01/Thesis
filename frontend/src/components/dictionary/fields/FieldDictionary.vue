@@ -2,7 +2,7 @@
   <div>
     <header>
       <div>Поля полевого акта</div>
-      <input type="text" class="search" placeholder="Поиск" v-model="search" />
+      <input type="text" class="search" placeholder="Поиск" v-model.trim="search" />
       <v-icon v-if="canEdit" color="orange" icon="mdi-plus" @click="editField(null)" />
     </header>
     <v-divider />

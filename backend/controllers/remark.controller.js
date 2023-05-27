@@ -68,7 +68,7 @@ class RemarkController {
             join public."user" as u on u.id_code = r.id_user
           order by
             r.research_id asc,
-            r.date desc;
+            r.id_code desc;
         `
       );
 
