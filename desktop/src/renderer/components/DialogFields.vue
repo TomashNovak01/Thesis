@@ -11,8 +11,8 @@
           <div v-if="field" :key="'field_' + index" class="fieldList">
             <div class="field">
               <input v-if="!data.find((f) => f.id_code === field.id_code)" type="checkbox" :id="'field:' + index"
-                :checked="!!newFields.find((f) => f.id_code === field.id_code)">
-              <input v-else type="checkbox" :id="'field:' + index" checked="true" disabled="true">
+                :checked="!!newFields.find((f) => f.id_code === field.id_code)" @click="toggle(field)" />
+              <input v-else type="checkbox" :id="'field:' + index" checked="true" disabled="true" />
               <label for="'field:' + index">{{ field.value_full }}</label>
             </div>
           </div>
